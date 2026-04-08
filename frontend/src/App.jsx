@@ -5,8 +5,11 @@ import AISummary from './components/AISummary';
 import KPICards from './components/KPICards';
 import TrendChart from './components/TrendChart';
 import RiskCards from './components/RiskCards';
+import DocChat from './components/DocChat';
 import Recommendations from './components/Recommendations';
 import { uploadAndAnalyze } from './api/client';
+import ReportCenter from './components/ReportCenter';
+import './styles/ReportCenter.css';
 import './App.css';
 
 export default function App() {
@@ -15,6 +18,7 @@ export default function App() {
   const [error, setError] = useState(null);
   const [apiKey, setApiKey] = useState('');
   const [showApiKey, setShowApiKey] = useState(false);
+  
 
   const handleFileSelect = async (file) => {
     setIsLoading(true);
@@ -147,14 +151,23 @@ export default function App() {
             <RiskCards risks={result.risks} />
             <Recommendations recommendations={result.recommendations} />
             <DataPreview data={result.raw_data} columns={result.column_headers} statementType={result.statement_type} />
+            
+            {/* // inside your results section, after <Recommendations>: */}
+            <ReportCenter analysisResult={result} />
+            
           </div>
         )}
       </main>
+
+      {/* Chat panel — appears after analysis is done */}
+      {result && <DocChat analysisResult={result} />}
 
       {/* ─── Footer ─────────────────────────────────────────── */}
       <footer className="footer">
         <p>FinGenie — AI Financial Analyst · Built with FastAPI + React · Powered by Groq Llama 3.3</p>
       </footer>
+
+      
     </div>
   );
 }
