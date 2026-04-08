@@ -66,6 +66,18 @@ async def upload_and_analyze(
 
     # 5. Generate AI summary
     llm_result = generate_summary(df, statement_type, kpis, risks, trends, api_key=api_key)
+    
+    # Map mitigations back to risks
+    mitigations = llm_result.get("risk_mitigations", {})
+    for r in risks:
+        if r.risk in mitigations:
+            r.mitigation = mitigations[r.risk]
+        else:
+            # Fallback based on name search
+            for risk_name, mit in mitigations.items():
+                if risk_name.lower() in r.risk.lower() or r.risk.lower() in risk_name.lower():
+                    r.mitigation = mit
+                    break
 
     # 6. Prepare raw data for frontend
     raw_data = []

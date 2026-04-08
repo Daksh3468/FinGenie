@@ -15,6 +15,7 @@ class Risk(BaseModel):
     risk: str
     severity: str  # "low", "medium", "high", "critical"
     description: str
+    mitigation: Optional[str] = None
 
 
 class Trend(BaseModel):

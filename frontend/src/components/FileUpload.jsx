@@ -59,19 +59,35 @@ export default function FileUpload({ onFileSelect, isLoading }) {
         className={`upload-dropzone ${isDragActive ? 'active' : ''} ${isDragReject ? 'reject' : ''} ${isLoading ? 'loading' : ''} ${selectedFile ? 'has-file' : ''}`}
         id="file-dropzone"
       >
+        {isLoading && <div className="scanning-line"></div>}
+        
         <input {...getInputProps()} id="file-input" />
-        <div className="upload-icon">{getIcon()}</div>
-        <p className="upload-message">{getMessage()}</p>
-        {!selectedFile && !isLoading && (
-          <p className="upload-hint">{getHint()}</p>
-        )}
-        {isLoading && (
-          <div className="upload-progress">
-            <div className="progress-bar">
-              <div className="progress-fill"></div>
+        
+        <div className="upload-icon" style={{fontSize: '48px', marginBottom: '8px', filter: isLoading ? 'drop-shadow(0 0 10px var(--accent-blue))' : 'none'}}>{getIcon()}</div>
+        <p className="upload-message" style={{fontSize: '20px', fontWeight: 800, color: isLoading ? 'var(--accent-blue)' : 'var(--bg-navy)'}}>{getMessage()}</p>
+        
+        <div style={{minHeight: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+          {isLoading ? (
+            <div className="upload-progress" style={{marginTop: '0'}}>
+              <div className="sub-label" style={{textAlign: 'center', marginBottom: '12px', color: 'var(--accent-blue)', opacity: 0.8}}>Neural Synthesis in progress</div>
+              <div className="progress-bar">
+                <div className="progress-fill"></div>
+              </div>
+              <div style={{marginTop: '16px', fontSize: '11px', fontWeight: 700, textAlign: 'center', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em'}}>
+                Ephemeral Sandbox Mode Active
+              </div>
             </div>
-          </div>
-        )}
+          ) : (
+            !selectedFile && (
+              <>
+                <p className="upload-hint" style={{marginTop: '0', marginBottom: '24px', maxWidth: '340px', textAlign: 'center', lineHeight: 1.6}}>
+                  {getHint()}
+                </p>
+                <button className="btn-dark" style={{padding: '14px 48px', fontSize: '14px'}}>SELECT FINANCIAL FILES</button>
+              </>
+            )
+          )}
+        </div>
       </div>
     </div>
   );

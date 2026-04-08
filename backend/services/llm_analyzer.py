@@ -45,7 +45,7 @@ def generate_summary(
 
     prompt = f"""You are a financial analyst AI assistant. A user has uploaded a {statement_type}.
 Below is the extracted data and pre-computed analysis. Your job is to provide a clear, 
-plain-language explanation that a non-finance person (college student or new founder) can understand.
+plain-language explanation and specific mitigation strategies for identified risks.
 
 ## Extracted Financial Data (preview):
 {data_preview}
@@ -61,23 +61,22 @@ plain-language explanation that a non-finance person (college student or new fou
 
 Please respond in this exact JSON format:
 {{
-  "summary": "A 2-3 paragraph plain-language summary of the financial health. Explain what the numbers mean in simple terms. Highlight the most important findings. Use everyday language, avoid jargon.",
+  "summary": "A 2-3 paragraph plain-language summary of the financial health...",
   "recommendations": [
     "Specific actionable recommendation 1",
-    "Specific actionable recommendation 2",
-    "Specific actionable recommendation 3",
-    "Specific actionable recommendation 4",
-    "Specific actionable recommendation 5"
-  ]
+    ...
+  ],
+  "risk_mitigations": {{
+    "Risk Name 1": "Specific, practical mitigation protocol or step-by-step action to address this risk.",
+    "Risk Name 2": "..."
+  }}
 }}
 
 Rules:
-- Write for someone with NO finance background
-- Explain WHY each finding matters
-- Keep recommendations specific and actionable
-- Use analogies where helpful
-- Be honest about both positive and negative findings
-- Return ONLY valid JSON, no markdown formatting
+- Write for someone with NO finance background.
+- For each risk in the 'Detected Risks' section, provide a concise 'mitigation protocol'.
+- Keep descriptions and mitigations actionable and realistic.
+- Return ONLY valid JSON.
 """
 
     try:
@@ -94,8 +93,6 @@ Rules:
 
         content = response.choices[0].message.content.strip()
 
-        # Try to parse JSON from the response
-        # Handle case where LLM wraps in ```json
         if content.startswith("```"):
             content = content.split("\n", 1)[1]
             content = content.rsplit("```", 1)[0]
@@ -104,7 +101,8 @@ Rules:
         result = json.loads(content)
         return {
             "summary": result.get("summary", "Analysis completed but summary generation had issues."),
-            "recommendations": result.get("recommendations", ["Review the KPIs and risks above for further insights."])
+            "recommendations": result.get("recommendations", ["Review the KPIs and risks above for further insights."]),
+            "risk_mitigations": result.get("risk_mitigations", {})
         }
 
     except json.JSONDecodeError:
