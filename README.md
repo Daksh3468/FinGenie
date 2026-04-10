@@ -23,7 +23,7 @@ FinGenie is built for the "Sovereign Intelligence" era—where data extraction m
 ## 📊 Core Modules
 
 ### 1. Financial Performance Pipeline
-A radically streamlined analyzer dashboard moving from high-level KPIs -> Trend Charts -> AI Summaries -> Risk Vectors ➡️ Raw Ledger Preview.
+A radically streamlined analyzer dashboard moving from high-level KPIs -> Trend Charts -> AI Summaries -> Risk Vectors -> Raw Ledger Preview.
 
 ### 2. SEC XBRL Deep Integration
 Natively ingest SEC filing ZIP packages (`sub.txt`, `num.txt`, `tag.txt`, `pre.txt`). FinGenie semantically translates dense technical tax tags into human-readable business logic without requiring manual spreadsheet alignment.
