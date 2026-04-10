@@ -46,8 +46,8 @@ export default function RiskAssessment({ result }) {
   }));
 
   return (
-    <div className="risk-assessment fade-in slide-up">
-      <div className="report-header" style={{marginBottom: '64px'}}>
+    <div className="risk-assessment fade-in slide-up" style={{ marginBottom: 'var(--space-2xl)', paddingTop: 'var(--space-md)' }}>
+      <div className="report-header" style={{marginBottom: 'var(--space-xl)', borderBottom: '1px solid var(--border-light)', paddingBottom: '32px'}}>
         <div className="sub-label" style={{color: 'var(--accent-rose)', marginBottom: '8px', fontSize: '13px'}}>Vector Vulnerability Audit</div>
         <h1 className="big-title" style={{fontSize: '48px'}}>Financial Risk <br/><span style={{color: 'var(--text-secondary)'}}>Ledger.</span></h1>
         

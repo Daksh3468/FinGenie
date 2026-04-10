@@ -44,19 +44,19 @@ export default function TrendChart({ rawData, columns, trends }) {
   ];
 
   return (
-    <section className="card chart-card fade-in" id="chart-section">
-      <div className="card-header">
-        <span className="card-icon">📉</span>
-        <h2>Visual Analytics</h2>
+    <div className="card-light fade-in hover-lift" style={{ padding: 'var(--space-lg)', borderRadius: 'var(--radius-xl)', marginBottom: 'var(--space-xl)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: 'var(--space-md)' }}>
+        <span style={{ fontSize: '28px' }}>📉</span>
+        <h2 className="sub-label" style={{ margin: 0, color: 'var(--bg-navy)' }}>Visual Analytics</h2>
       </div>
 
-      <div className="chart-tabs" id="chart-tabs">
+      <div style={{ display: 'flex', gap: '8px', marginBottom: 'var(--space-lg)', borderBottom: '1px solid var(--border-light)', paddingBottom: '16px' }}>
         {tabs.map(tab => (
           <button
             key={tab.key}
-            className={`chart-tab ${activeTab === tab.key ? 'active' : ''}`}
+            className={`btn-secondary ${activeTab === tab.key ? 'active' : ''}`}
             onClick={() => setActiveTab(tab.key)}
-            id={`chart-tab-${tab.key}`}
+            style={{ padding: '8px 16px', fontSize: '13px', background: activeTab === tab.key ? 'var(--bg-navy)' : 'transparent', color: activeTab === tab.key ? 'white' : 'var(--text-secondary)' }}
           >
             {tab.label}
           </button>
@@ -179,7 +179,7 @@ export default function TrendChart({ rawData, columns, trends }) {
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }
 

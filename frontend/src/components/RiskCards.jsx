@@ -1,45 +1,46 @@
 const SEVERITY_CONFIG = {
-  critical: { color: '#ef4444', bg: 'rgba(239,68,68,0.1)', icon: '🔴', label: 'CRITICAL' },
-  high:     { color: '#f97316', bg: 'rgba(249,115,22,0.1)', icon: '🟠', label: 'HIGH' },
-  medium:   { color: '#f59e0b', bg: 'rgba(245,158,11,0.1)', icon: '🟡', label: 'MEDIUM' },
-  low:      { color: '#10b981', bg: 'rgba(16,185,129,0.1)', icon: '🟢', label: 'LOW' },
+  critical: { color: 'var(--accent-rose)', bg: 'rgba(239,68,68,0.05)', icon: '🔴', label: 'CRITICAL' },
+  high:     { color: 'var(--accent-cyan)', bg: 'rgba(6,182,212,0.05)', icon: '🟠', label: 'HIGH' },
+  medium:   { color: '#f59e0b', bg: 'rgba(245,158,11,0.05)', icon: '🟡', label: 'MEDIUM' },
+  low:      { color: 'var(--accent-emerald)', bg: 'rgba(16,185,129,0.05)', icon: '🟢', label: 'LOW' },
 };
 
 export default function RiskCards({ risks }) {
   if (!risks || risks.length === 0) return null;
 
   return (
-    <section className="card risk-section fade-in" id="risk-section">
-      <div className="card-header">
-        <span className="card-icon">⚠️</span>
-        <h2>Risk Assessment</h2>
+    <div className="fade-in slide-up" style={{ marginBottom: 'var(--space-xl)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: 'var(--space-md)' }}>
+        <span style={{ fontSize: '28px' }}>⚠️</span>
+        <h2 className="sub-label" style={{ margin: 0, color: 'var(--bg-navy)' }}>Risk Assessment</h2>
       </div>
-      <div className="risk-grid">
+      <div className="grid-2x2" style={{ gap: 'var(--space-md)' }}>
         {risks.map((risk, idx) => {
           const config = SEVERITY_CONFIG[risk.severity] || SEVERITY_CONFIG.low;
           return (
             <div
               key={idx}
-              className="risk-card"
-              id={`risk-card-${idx}`}
+              className="card-light hover-lift"
               style={{
                 borderLeft: `4px solid ${config.color}`,
-                background: config.bg,
-                animationDelay: `${idx * 0.12}s`,
+                padding: 'var(--space-md)',
+                animationDelay: `${idx * 0.1}s`,
               }}
             >
-              <div className="risk-header">
-                <span className="risk-icon">{config.icon}</span>
-                <span className="risk-name">{risk.risk}</span>
-                <span className="risk-badge" style={{ background: config.color }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <span style={{ fontSize: '20px' }}>{config.icon}</span>
+                  <h3 style={{ fontSize: '18px', fontWeight: 800, margin: 0 }}>{risk.risk}</h3>
+                </div>
+                <span style={{ background: config.color, color: 'white', padding: '4px 10px', borderRadius: '12px', fontSize: '10px', fontWeight: 900, letterSpacing: '0.05em' }}>
                   {config.label}
                 </span>
               </div>
-              <p className="risk-description">{risk.description}</p>
+              <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>{risk.description}</p>
             </div>
           );
         })}
       </div>
-    </section>
+    </div>
   );
 }

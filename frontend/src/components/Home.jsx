@@ -1,164 +1,224 @@
 import FileUpload from './FileUpload';
 
 export default function Home({ onFileSelect, isLoading, error }) {
+  const scrollToUpload = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+
   return (
-    <div className="analyzer-landing fade-in slide-up">
-      {/* --- Hero Section --- */}
-      <div className="landing-hero" style={{marginBottom: '64px'}}>
-        <div className="hero-text-section">
-          <div className="hero-badge">Sovereign Financial Intelligence</div>
-          <h1 className="hero-title">Financial Logic.<br/>Automated.</h1>
-          <p className="hero-subtitle">
-            Securely process PDF, Excel, and SEC datasets through our sovereign analysis engine. Instant transparency for founders, analysts, and treasury teams.
+    <div className="analyzer-landing">
+      {/* ─── Hero Section ─────────────────────────────────── */}
+      <section className="landing-hero" style={{ padding: 'var(--space-md) 0 var(--space-lg) 0' }}>
+        <div className="hero-text-section slide-up">
+          <div className="hero-badge" style={{ marginBottom: 'var(--space-sm)' }}>Sovereign Financial Intelligence</div>
+          <h1 className="hero-title" style={{ fontSize: '48px', fontWeight: 900, lineHeight: 1.1, marginBottom: 'var(--space-xs)' }}>
+            Turn Financial Statements into <span style={{ color: 'var(--accent-blue)' }}>Actionable Insights</span>
+          </h1>
+          <p className="hero-subtitle" style={{ fontSize: '16px', marginBottom: 'var(--space-sm)', color: 'var(--text-secondary)' }}>
+            Upload PDFs, Excel sheets, or SEC filings — instantly extract KPIs, detect risks, and generate executive-ready summaries.
           </p>
-          <div className="hero-features" style={{gap: '24px'}}>
-            <div className="hero-feat-item">
-              <span className="feat-num">01</span> AES-256 Multi-Layer Processing
-            </div>
-            <div className="hero-feat-item">
-              <span className="feat-num">02</span> Zero-Knowledge Data Retention
-            </div>
+          
+          <div style={{ display: 'flex', gap: 'var(--space-sm)', marginBottom: 'var(--space-sm)' }}>
+            <button className="btn-primary" onClick={scrollToUpload}>
+              Upload Financials →
+            </button>
+          </div>
+
+          <div style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 600, display: 'flex', gap: 'var(--space-sm)', alignItems: 'center' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-emerald)' }}></div>
+              No signup required
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-emerald)' }}></div>
+              AES-256 encrypted
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-emerald)' }}></div>
+              Zero data retention
+            </span>
           </div>
         </div>
 
-        <div className="upload-card">
-          <div className="card-light" style={{padding: '40px', position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'center'}}>
-            <div style={{position: 'absolute', top: '-50px', right: '-50px', width: '200px', height: '200px', background: 'var(--bg-blue-light)', borderRadius: '50%', zIndex: 0}}></div>
-            <div style={{position: 'relative', zIndex: 1, width: '100%'}}>
-              <h2 className="upload-title" style={{fontSize: '36px', textAlign: 'left', marginBottom: '8px', color: 'var(--bg-navy)'}}>Upload Ledger</h2>
-              <p className="upload-desc" style={{textAlign: 'left', marginBottom: '24px', fontSize: '16px', color: 'var(--text-secondary)'}}>PDF, XLSX, CSV, or SEC datasets</p>
+        <div className="upload-card slide-up" style={{ animationDelay: '0.2s' }}>
+          <div className="card-light glass-glow" style={{ padding: 'var(--space-md)', position: 'relative', overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <h2 className="upload-title" style={{ fontSize: '24px', marginBottom: 'var(--space-xs)', color: 'var(--bg-navy)' }}>Analyze Document</h2>
+              <p className="upload-desc" style={{ marginBottom: 'var(--space-sm)', fontSize: '14px', color: 'var(--text-secondary)' }}>Get started by dropping your ledger below</p>
               
               <FileUpload onFileSelect={onFileSelect} isLoading={isLoading} />
               
               {error && (
-                <div className="fade-in" style={{marginTop: '24px', padding: '16px', background: 'hsl(0, 100%, 98%)', color: 'var(--accent-rose)', border: '1px solid hsl(0, 100%, 94%)', borderRadius: '12px', fontSize: '15px', textAlign: 'left', fontWeight: 600}}>
+                <div className="animate-fade-in-up" style={{ marginTop: '24px', padding: '16px', background: 'hsl(0, 100%, 98%)', color: 'var(--accent-rose)', border: '1px solid hsl(0, 100%, 94%)', borderRadius: '12px', fontSize: '15px', fontWeight: 600 }}>
                   ⚠️ {error}
                 </div>
               )}
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
 
-      {/* --- Intelligence Capabilities --- */}
-      <div style={{marginTop: '100px'}}>
-        <div style={{textAlign: 'center', marginBottom: '60px'}}>
-          <div className="sub-label">Intelligence Layer</div>
-          <h2 className="big-title" style={{fontSize: '48px'}}>Core Capabilities.</h2>
+      {/* ─── Outcome-Driven Features ────────────────────────── */}
+      <section style={{ padding: 'var(--space-md) 0' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'var(--space-lg)' }}>
+          <div className="sub-label">Capabilities</div>
+          <h2 className="big-title">Built for Performance.</h2>
         </div>
 
-        <div className="grid-2x2" style={{gap: '32px'}}>
-          <div className="card-light">
-             <div style={{fontSize: '32px', marginBottom: '20px'}}>📄</div>
-             <h3 className="w-title" style={{fontSize: '20px', marginBottom: '12px'}}>PDF & Excel Synthesis</h3>
-             <p className="w-desc" style={{fontSize: '15px', lineHeight: 1.6}}>High-fidelity extraction maps fragmented items into normalized data vectors.</p>
+        <div className="grid-2x2" style={{ gap: 'var(--space-lg)' }}>
+          <div className="card-light hover-lift">
+             <div style={{ fontSize: '32px', marginBottom: 'var(--space-md)' }}>⚡</div>
+             <h3 style={{ fontSize: '22px', marginBottom: 'var(--space-xs)' }}>No Manual Entry</h3>
+             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>Upload fragmented statements and get structured, audit-ready data instantly. Skip the modeling grunt work.</p>
           </div>
-          <div className="card-light">
-             <div style={{fontSize: '32px', marginBottom: '20px'}}>🏛️</div>
-             <h3 className="w-title" style={{fontSize: '20px', marginBottom: '12px'}}>SEC XBRL Support</h3>
-             <p className="w-desc" style={{fontSize: '15px', lineHeight: 1.6}}>Direct support for official SEC datasets (SUB, NUM, TAG, PRE) for instant reports.</p>
+          <div className="card-light hover-lift">
+             <div style={{ fontSize: '32px', marginBottom: 'var(--space-md)' }}>🎯</div>
+             <h3 style={{ fontSize: '22px', marginBottom: 'var(--space-xs)' }}>Automated Anomalies</h3>
+             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>Identify risks, trends, and financial outliers automatically before they become institutional liabilities.</p>
           </div>
-          <div className="card-light">
-             <div style={{fontSize: '32px', marginBottom: '20px'}}>🧠</div>
-             <h3 className="w-title" style={{fontSize: '20px', marginBottom: '12px'}}>AI Logic Synthesis</h3>
-             <p className="w-desc" style={{fontSize: '15px', lineHeight: 1.6}}>Llama 3.3 models generate executive summaries identifying hidden risks.</p>
+          <div className="card-light hover-lift">
+             <div style={{ fontSize: '32px', marginBottom: 'var(--space-md)' }}>📊</div>
+             <h3 style={{ fontSize: '22px', marginBottom: 'var(--space-xs)' }}>Clean Dashboards</h3>
+             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>Instant visualization for liquidity, burn rate, and performance momentum using institutional standard design.</p>
           </div>
-          <div className="card-light">
-             <div style={{fontSize: '32px', marginBottom: '20px'}}>📈</div>
-             <h3 className="w-title" style={{fontSize: '20px', marginBottom: '12px'}}>Visual Analytics</h3>
-             <p className="w-desc" style={{fontSize: '15px', lineHeight: 1.6}}>Instant charting of liquidity health and velocity using institutional wrappers.</p>
+          <div className="card-light hover-lift">
+             <div style={{ fontSize: '32px', marginBottom: 'var(--space-md)' }}>🏛️</div>
+             <h3 style={{ fontSize: '22px', marginBottom: 'var(--space-xs)' }}>SEC-Ready Intelligence</h3>
+             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>Process massive XBRL datasets (10-K, 10-Q) and generate competitive landscape reports in seconds.</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* --- Automated Pipeline --- */}
-      <div className="workflow-section" style={{marginTop: '100px'}}>
-        <div style={{textAlign: 'center', marginBottom: '60px'}}>
-          <div className="sub-label">Proprietary Methodology</div>
-          <h2 className="big-title" style={{fontSize: '48px'}}>Automated Pipeline.</h2>
+      {/* ─── Storytelling Pipeline ─────────────────────────── */}
+      <section style={{ padding: 'var(--space-md) 0' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'var(--space-lg)' }}>
+          <div className="sub-label">Implementation</div>
+          <h2 className="big-title">Three Steps to Insight.</h2>
         </div>
         
-        <div className="workflow-cards" style={{gap: '40px'}}>
-          <div className="w-card scale-in" style={{padding: '40px', animationDelay: '0.1s'}}>
-            <div className="w-icon" style={{fontSize: '40px', marginBottom: '24px'}}>📥</div>
-            <div className="w-title" style={{fontSize: '18px', fontWeight: 800, marginBottom: '12px'}}>Phase 01. Ingestion</div>
-            <div className="w-desc" style={{fontSize: '15px', lineHeight: 1.6}}>Documents are parsed in ephemeral sandboxes. Supports standard GAAP and custom formats.</div>
+        <div className="pipeline-container">
+          <div className="pipeline-step card-light hover-lift">
+            <div style={{ fontSize: '40px', marginBottom: 'var(--space-md)' }}>📥</div>
+            <h3 style={{ fontSize: '20px', fontWeight: 800, marginBottom: 'var(--space-xs)' }}>01. Instant Ingestion</h3>
+            <p style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>Drag and drop any financial PDF or Excel. Our engine normalizes fragmented line items in real-time.</p>
           </div>
-          <div className="w-card dark scale-in" style={{padding: '40px', animationDelay: '0.2s'}}>
-            <div className="w-icon" style={{fontSize: '40px', marginBottom: '24px'}}>⚙️</div>
-            <div className="w-title" style={{fontSize: '18px', fontWeight: 800, marginBottom: '12px'}}>Phase 02. Logic Mapping</div>
-            <div className="w-desc" style={{fontSize: '15px', lineHeight: 1.6}}>Neural architectures reorganize raw counts into KPIs like Burn and Runway.</div>
+          <div className="pipeline-connector" style={{ marginTop: 'calc(var(--space-md) + 12px)' }}></div>
+          <div className="pipeline-step card-dark glass-glow hover-lift" style={{ background: 'var(--gradient-dark)' }}>
+            <div style={{ fontSize: '40px', marginBottom: 'var(--space-md)' }}>⚙️</div>
+            <h3 style={{ fontSize: '20px', fontWeight: 800, marginBottom: 'var(--space-xs)', color: 'white' }}>02. AI Processing</h3>
+            <p style={{ fontSize: '15px', opacity: 0.7, lineHeight: 1.6 }}>Logic mapping reorganizes raw ledger counts into high-fidelity KPIs using sovereign neural nodes.</p>
           </div>
-          <div className="w-card scale-in" style={{padding: '40px', animationDelay: '0.3s'}}>
-            <div className="w-icon" style={{fontSize: '40px', marginBottom: '24px'}}>📄</div>
-            <div className="w-title" style={{fontSize: '18px', fontWeight: 800, marginBottom: '12px'}}>Phase 03. Artifacts</div>
-            <div className="w-desc" style={{fontSize: '15px', lineHeight: 1.6}}>Interactive dashboards featuring AI-detected risk vectors and trend audits.</div>
+          <div className="pipeline-connector" style={{ marginTop: 'calc(var(--space-md) + 12px)' }}></div>
+          <div className="pipeline-step card-light hover-lift">
+            <div style={{ fontSize: '40px', marginBottom: 'var(--space-md)' }}>💎</div>
+            <h3 style={{ fontSize: '20px', fontWeight: 800, marginBottom: 'var(--space-xs)' }}>03. Executive Artifacts</h3>
+            <p style={{ fontSize: '15px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>Receive custom-tailored dashboards featuring AI-detected risk vectors and trend audit visualizations.</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* --- Privacy Section --- */}
-      <div style={{marginTop: '100px', padding: '80px 0', background: 'var(--bg-navy)', borderRadius: 'var(--radius-xl)', color: 'white', position: 'relative', overflow: 'hidden'}}>
-        <div style={{position: 'absolute', bottom: '-80px', right: '-80px', width: '400px', height: '400px', background: 'rgba(255,255,255,0.03)', borderRadius: '50%'}}></div>
-        <div style={{padding: '0 80px', position: 'relative', zIndex: 1}}>
-          <div className="grid-cols-12" style={{alignItems: 'center', gap: '80px'}}>
+      {/* ─── Use Cases ─────────────────────────────────────── */}
+      <section style={{ padding: 'var(--space-md) 0' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'var(--space-lg)' }}>
+          <div className="sub-label">Community</div>
+          <h2 className="big-title">Built for Decision Makers.</h2>
+        </div>
+
+        <div className="grid-cols-12" style={{ gap: 'var(--space-lg)' }}>
+          <div className="col-span-4 card-light hover-lift" style={{ borderLeft: '4px solid var(--accent-blue)', padding: 'var(--space-lg)' }}>
+             <h3 style={{ marginBottom: 'var(--space-sm)' }}>Founders</h3>
+             <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: 1.6 }}>Master your runway. Get instant clarity on monthly burn and cash dynamics without touching a spreadsheet.</p>
+          </div>
+          <div className="col-span-4 card-light hover-lift" style={{ borderLeft: '4px solid var(--accent-cyan)', padding: 'var(--space-lg)' }}>
+             <h3 style={{ marginBottom: 'var(--space-sm)' }}>Analysts</h3>
+             <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: 1.6 }}>Skip the manual data entry. Upload filings and move straight to strategic modeling and trend analysis.</p>
+          </div>
+          <div className="col-span-4 card-light hover-lift" style={{ borderLeft: '4px solid var(--accent-emerald)', padding: 'var(--space-lg)' }}>
+             <h3 style={{ marginBottom: 'var(--space-sm)' }}>Finance Teams</h3>
+             <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: 1.6 }}>Automate standardized reporting and identify institutional vulnerabilities across the entire balance sheet.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Security Section ─────────────────────────────── */}
+      <section style={{ margin: 'var(--space-md) 0', padding: 'var(--space-lg) 0', background: 'var(--gradient-dark)', borderRadius: 'var(--radius-xl)', color: 'white', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', bottom: '-100px', right: '-100px', width: '400px', height: '400px', background: 'var(--accent-blue)', opacity: 0.1, borderRadius: '50%', filter: 'blur(80px)' }}></div>
+        <div style={{ padding: '0 8%', position: 'relative', zIndex: 1 }}>
+          <div className="grid-cols-12" style={{ alignItems: 'center', gap: 'var(--space-xl)' }}>
             <div className="col-span-6">
-              <div className="sub-label" style={{color: 'var(--accent-emerald)'}}>Sovereignty & Trust</div>
-              <h2 className="big-title" style={{color: 'white', fontSize: '48px', marginBottom: '24px'}}>Your data stays yours.</h2>
-              <p style={{fontSize: '18px', opacity: 0.7, lineHeight: 1.7, marginBottom: '40px'}}>
-                Built on zero-retention architecture. We utilize edge-compute to tokenize data. Once session ends, artifacts are purged from sovereign nodes.
+              <div className="sub-label" style={{ color: 'var(--accent-emerald)' }}>Privacy First</div>
+              <h2 className="big-title" style={{ color: 'white', fontSize: '56px', marginBottom: 'var(--space-md)' }}>Your data stays yours.</h2>
+              <p style={{ fontSize: '19px', opacity: 0.7, lineHeight: 1.7, marginBottom: 'var(--space-lg)' }}>
+                FinGenie utilizes an ephemeral "process-and-purge" cycle. We process your data in volatile memory nodes and delete it the moment your session ends.
               </p>
-              <div style={{display: 'flex', gap: '40px'}}>
-                <div style={{display: 'flex', gap: '12px', alignItems: 'center'}}>
-                  <div style={{width: '12px', height: '12px', borderRadius: '50%', background: 'var(--accent-emerald)'}}></div>
-                  <span style={{fontSize: '14px', fontWeight: 700, letterSpacing: '0.05em'}}>SOC2 COMPLIANT MOCK</span>
-                </div>
-                <div style={{display: 'flex', gap: '12px', alignItems: 'center'}}>
-                  <div style={{width: '12px', height: '12px', borderRadius: '50%', background: 'var(--accent-emerald)'}}></div>
-                  <span style={{fontSize: '14px', fontWeight: 700, letterSpacing: '0.05em'}}>AES-256 ENCRYPTED</span>
-                </div>
+              <div style={{ display: 'flex', gap: 'var(--space-lg)' }}>
+                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xs)' }}>
+                    <div style={{ fontSize: '24px', fontWeight: 900 }}>AES-256</div>
+                    <div style={{ fontSize: '12px', opacity: 0.5, fontWeight: 700 }}>ENCRYPTION STANDARD</div>
+                 </div>
+                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xs)' }}>
+                    <div style={{ fontSize: '24px', fontWeight: 900 }}>ZERO</div>
+                    <div style={{ fontSize: '12px', opacity: 0.5, fontWeight: 700 }}>DATA RETENTION</div>
+                 </div>
               </div>
             </div>
             <div className="col-span-6">
-               <div className="card-light" style={{background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', padding: '48px'}}>
-                  <h3 className="sub-label" style={{color: 'white'}}>Cloud Security</h3>
-                  <div style={{marginTop: '32px', display: 'flex', flexDirection: 'column', gap: '24px'}}>
-                    <div style={{background: 'rgba(255,255,255,0.03)', padding: '24px', borderRadius: '16px'}}>
-                      <div style={{fontWeight: 800, fontSize: '18px', marginBottom: '8px'}}>Isolated Sandbox</div>
-                      <div style={{fontSize: '14px', opacity: 0.6}}>Every file is analyzed in ephemeral compute.</div>
+               <div className="card-light glass-glow" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', padding: 'var(--space-lg)' }}>
+                  <div style={{ marginBottom: '0', display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+                    <div style={{ display: 'flex', gap: 'var(--space-md)' }}>
+                       <div style={{ fontSize: '28px' }}>🛡️</div>
+                       <div>
+                          <div style={{ fontWeight: 800, fontSize: '18px', marginBottom: 'var(--space-xs)' }}>Isolated Sandbox</div>
+                          <div style={{ fontSize: '14px', opacity: 0.5 }}>Every file is analyzed in a single-use compute node.</div>
+                       </div>
                     </div>
-                    <div style={{background: 'rgba(255,255,255,0.03)', padding: '24px', borderRadius: '16px'}}>
-                      <div style={{fontWeight: 800, fontSize: '18px', marginBottom: '8px'}}>Tokenized Ledger</div>
-                      <div style={{fontSize: '14px', opacity: 0.6}}>Ledger hashed before processing by nodes.</div>
+                    <div style={{ display: 'flex', gap: 'var(--space-md)' }}>
+                       <div style={{ fontSize: '28px' }}>🔑</div>
+                       <div>
+                          <div style={{ fontWeight: 800, fontSize: '18px', marginBottom: 'var(--space-xs)' }}>Private Models</div>
+                          <div style={{ fontSize: '14px', opacity: 0.5 }}>Utilizes private LLM instances—data is never used for training.</div>
+                       </div>
                     </div>
                   </div>
                </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* --- FAQ Section --- */}
-      <div style={{marginTop: '100px', maxWidth: '900px', margin: '100px auto 100px auto'}}>
-        <div style={{textAlign: 'center', marginBottom: '60px'}}>
-           <div className="sub-label">Information Hub</div>
-           <h2 className="big-title" style={{fontSize: '44px'}}>Common Questions.</h2>
+      {/* ─── FAQ Section ─────────────────────────────────── */}
+      <section style={{ padding: 'var(--space-md) 0', maxWidth: '900px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'var(--space-lg)' }}>
+           <div className="sub-label">Information</div>
+           <h2 className="big-title">Common Questions.</h2>
         </div>
         
-        <div className="faq-item" style={{padding: '32px 0'}}>
-          <div className="faq-question" style={{fontSize: '20px'}}>What file formats are supported?</div>
-          <div className="faq-answer" style={{fontSize: '16px', marginTop: '8px'}}>PDF statements, XLSX workbooks, CSV extracts, and SEC XBRL ZIP datasets. Supports raw text extraction for table-less docs.</div>
+        <div className="faq-item" style={{ padding: 'var(--space-md) 0' }}>
+          <div className="faq-question">How is this different from manual Excel modeling?</div>
+          <div className="faq-answer" style={{ paddingTop: 'var(--space-xs)' }}>FinGenie automates the extraction and normalization of data from static PDFs and SEC filings, saving hours of manual data entry while providing AI-detected risk insights that human analysts often miss.</div>
         </div>
-        <div className="faq-item" style={{padding: '32px 0'}}>
-          <div className="faq-question" style={{fontSize: '20px'}}>Is my data shared with AI models?</div>
-          <div className="faq-answer" style={{fontSize: '16px', marginTop: '8px'}}>Utilizes dedicated private instances. Data is processed in-memory and never used for training or stored persistently.</div>
+        <div className="faq-item" style={{ padding: 'var(--space-md) 0' }}>
+          <div className="faq-question">Can I trust the AI-generated KPIs?</div>
+          <div className="faq-answer" style={{ paddingTop: 'var(--space-xs)' }}>Yes. Every KPI is linked back to the source document. You can verify all synthesized figures in the "Raw Data Ledger" section of the analyzer to ensure 100% source fidelity.</div>
         </div>
-        <div className="faq-item" style={{padding: '32px 0'}}>
-          <div className="faq-question" style={{fontSize: '20px'}}>How accurate are the extracted KPIs?</div>
-          <div className="faq-answer" style={{fontSize: '16px', marginTop: '8px'}}>99.9% verifiable source fidelity. Review the "Raw Data Ledger" section to confirm against source.</div>
+        <div className="faq-item" style={{ padding: 'var(--space-md) 0' }}>
+          <div className="faq-question">Is my financial data stored?</div>
+          <div className="faq-answer" style={{ paddingTop: 'var(--space-xs)' }}>No. We maintain a zero-retention policy. Your data exists only in memory during your session and is permanently purged once you close the application or clear the analysis.</div>
         </div>
-      </div>
+      </section>
+
+      {/* ─── Final CTA Section ─────────────────────────────── */}
+      <section style={{ padding: 'var(--space-xl) 0', textAlign: 'center' }}>
+         <div className="card-blue slide-up" style={{ padding: 'var(--space-lg) var(--space-md)', maxWidth: '1000px', margin: '0 auto' }}>
+            <h2 className="big-title" style={{ fontSize: '56px', marginBottom: 'var(--space-sm)' }}>Stop Analyzing. Start Understanding.</h2>
+            <p style={{ fontSize: '20px', color: 'var(--text-secondary)', marginBottom: 'var(--space-lg)' }}>Upload your financials and get executive-ready insights in seconds.</p>
+            <button className="btn-primary" style={{ padding: 'var(--space-md) var(--space-xl)', fontSize: '18px' }} onClick={scrollToUpload}>
+               Upload Financials Now →
+            </button>
+         </div>
+      </section>
     </div>
   );
 }

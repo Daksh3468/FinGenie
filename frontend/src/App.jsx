@@ -106,7 +106,9 @@ export default function App() {
 
         <div className="nav-actions">
           {result && (
-            <button className="btn-dark" onClick={handleAnalyzeNew}>Analyze New File</button>
+            <button className="btn-primary" style={{ padding: '8px 24px', fontSize: '14px' }} onClick={handleAnalyzeNew}>
+              Analyze New File
+            </button>
           )}
         </div>
       </header>

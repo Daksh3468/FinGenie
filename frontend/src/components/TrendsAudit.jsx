@@ -49,8 +49,8 @@ export default function TrendsAudit({ result }) {
   };
 
   return (
-    <div className="trends-audit fade-in slide-up">
-      <div className="report-header" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '64px'}}>
+    <div className="trends-audit fade-in slide-up" style={{ marginBottom: 'var(--space-2xl)', paddingTop: 'var(--space-md)' }}>
+      <div className="report-header" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-xl)', borderBottom: '1px solid var(--border-light)', paddingBottom: '32px'}}>
         <div>
           <div className="sub-label" style={{color: 'var(--accent-emerald)', marginBottom: '8px', fontSize: '13px'}}>Institutional Trend Synthesis</div>
           <h1 className="big-title" style={{fontSize: '48px'}}>Financial Velocity <br/><span style={{color: 'var(--text-secondary)'}}>Audit Report</span></h1>
