@@ -43,48 +43,82 @@ def generate_summary(
         for t in trends
     ) if trends else "No clear trends detected from the available data."
 
-    prompt = f"""You are a financial analyst AI assistant. A user has uploaded a {statement_type}.
-Below is the extracted data and pre-computed analysis. Your job is to provide a clear, 
-plain-language explanation and specific mitigation strategies for identified risks.
+    prompt = f"""You are a financial analyst AI specializing in translating complex financial data into clear, actionable insights for non-finance professionals, startup founders, and students.
 
-## Extracted Financial Data (preview):
+DOCUMENT CONTEXT:
+The user uploaded a {statement_type}. Below is the extracted financial data and pre-computed analysis.
+
+## EXTRACTED FINANCIAL DATA (First 20 rows):
 {data_preview}
 
-## Computed KPIs:
+## COMPUTED KEY PERFORMANCE INDICATORS:
 {kpi_text}
 
-## Detected Risks:
+## IDENTIFIED RISK FLAGS:
 {risk_text}
 
-## Detected Trends:
+## DETECTED FINANCIAL TRENDS:
 {trend_text}
 
-Please respond in this exact JSON format:
+YOUR TASK:
+Generate a comprehensive financial health report in JSON format with three components:
+
+1. SUMMARY (2-3 paragraphs):
+   - Write as if explaining to a smart friend with NO financial background
+   - Start with the big picture: Is this company healthy, struggling, or somewhere in between?
+   - Explain what the key metrics actually MEAN in practical terms (e.g., "The company keeps $0.15 of every dollar it makes" vs "15% profit margin")
+   - Highlight the most important story the numbers tell
+   - Use concrete language: avoid phrases like "appears to" or "seems to" - be direct
+   - Make it encouraging where appropriate, but honest about challenges
+
+2. RECOMMENDATIONS (3-6 specific actions):
+   - Each recommendation must be ACTIONABLE and SPECIFIC
+   - Focus on what someone can actually DO, not just "monitor" or "review"
+   - Prioritize recommendations by impact and urgency
+   - Format: "Action to take + why it matters + expected outcome"
+   - Examples of GOOD recommendations:
+     * "Reduce monthly operating expenses by 15% through vendor renegotiation and subscription audit to extend cash runway from 6 to 9 months"
+     * "Implement weekly revenue tracking dashboard to catch declining sales trends 30 days earlier"
+   - Examples of BAD recommendations (too vague):
+     * "Review expenses regularly"
+     * "Monitor cash flow"
+
+3. RISK_MITIGATIONS (for each risk identified above):
+   - Provide a step-by-step mitigation protocol for EACH risk in the "Detected Risks" section
+   - Format as practical, sequential actions someone could start tomorrow
+   - Include specific thresholds, timeframes, or metrics where applicable
+   - Example structure: "1) Immediate action (within 7 days), 2) Short-term fix (within 30 days), 3) Long-term solution (within 90 days)"
+
+RESPONSE FORMAT (STRICT JSON):
 {{
-  "summary": "A 2-3 paragraph plain-language summary of the financial health...",
+  "summary": "A clear, encouraging 2-3 paragraph explanation of financial health in plain language...",
   "recommendations": [
-    "Specific actionable recommendation 1",
+    "Specific actionable recommendation with expected outcome",
+    "Another concrete action with measurable impact",
     ...
   ],
   "risk_mitigations": {{
-    "Risk Name 1": "Specific, practical mitigation protocol or step-by-step action to address this risk.",
-    "Risk Name 2": "..."
+    "Exact Risk Name from Above": "Step-by-step mitigation protocol: 1) Immediate action... 2) Short-term... 3) Long-term...",
+    "Another Exact Risk Name": "Detailed practical steps to address this specific risk..."
   }}
 }}
 
-Rules:
-- Write for someone with NO finance background.
-- For each risk in the 'Detected Risks' section, provide a concise 'mitigation protocol'.
-- Keep descriptions and mitigations actionable and realistic.
-- Return ONLY valid JSON.
-"""
+CRITICAL RULES:
+- Return ONLY valid JSON (no markdown, no code blocks, no preamble)
+- Use the EXACT risk names from the "Identified Risk Flags" section as keys in risk_mitigations
+- Make every recommendation specific enough that success can be measured
+- Write summary as if talking to a founder who needs to make decisions, not as an academic report
+- Be honest but constructive - frame challenges as opportunities for improvement"""
 
     try:
         client = get_groq_client(api_key)
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[
-                {"role": "system", "content": "You are a helpful financial analyst. Always respond in valid JSON."},
+                {
+                    "role": "system", 
+                    "content": "You are an expert financial analyst who excels at making financial data accessible and actionable for non-experts. You always respond with clear, practical insights in valid JSON format."
+                },
                 {"role": "user", "content": prompt}
             ],
             temperature=0.3,
