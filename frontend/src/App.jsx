@@ -7,6 +7,7 @@ import RiskAssessment from './components/RiskAssessment';
 import Privacy from './components/Privacy';
 import Compliance from './components/Compliance';
 import Terms from './components/Terms';
+import DocChat from './components/DocChat';
 import { uploadAndAnalyze } from './api/client';
 import './index.css';
 
@@ -123,7 +124,7 @@ export default function App() {
         {activeTab === 'compliance' && <Compliance />}
         {activeTab === 'terms' && <Terms />}
       </main>
-
+      {result && <DocChat analysisResult={result} />}
       {/* ─── Footer ─────────────────────────────────────────── */}
       <footer className="site-footer">
         <div className="footer-content" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
