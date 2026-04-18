@@ -15,6 +15,7 @@ router = APIRouter(prefix="/api/report", tags=["report"])
 class ReportRequest(BaseModel):
     format_id: str = Field(
         ...,
+        max_length=50,
         description=(
             "Report format. One of: "
             "executive, investor, audit, board, startup, academic"
@@ -23,14 +24,14 @@ class ReportRequest(BaseModel):
     )
 
     # Full analysis payload from /api/analyze (same shape as ChatRequest)
-    raw_data: list[dict]               = Field(default_factory=list)
-    column_headers: list[str]          = Field(default_factory=list)
-    statement_type: str                = Field(default="Financial Statement")
-    summary: str                       = Field(default="")
-    kpis: list[dict]                   = Field(default_factory=list)
-    risks: list[dict]                  = Field(default_factory=list)
-    recommendations: list             = Field(default_factory=list)
-    parsing_mode: str                  = Field(default="standard")
+    raw_data: list[dict] = Field(default_factory=list, max_items=1000)
+    column_headers: list[str] = Field(default_factory=list, max_items=50)
+    statement_type: str = Field(default="Financial Statement", max_length=100)
+    summary: str = Field(default="", max_length=5000)
+    kpis: list[dict] = Field(default_factory=list, max_items=50)
+    risks: list[dict] = Field(default_factory=list, max_items=50)
+    recommendations: list = Field(default_factory=list, max_items=100)
+    parsing_mode: str = Field(default="standard", max_length=50)
 
 
 class ReportResponse(BaseModel):

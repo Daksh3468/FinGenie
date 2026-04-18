@@ -58,11 +58,30 @@ npm run dev
 
 ---
 
+## � Documentation
+
+### Setup & Deployment
+- **[Backend Deployment Guide](backend/DEPLOYMENT.md)** — Production setup, environment config, health checks, troubleshooting
+- **[Frontend Deployment Guide](frontend/DEPLOYMENT.md)** — Build process, deploy to Vercel/Netlify/AWS/Docker, caching, optimization
+- **[Security Policy](SECURITY.md)** — Security practices, API key management, CORS, data privacy, responsible disclosure
+
+### Development
+- **[Backend API Documentation](http://localhost:8000/docs)** — Interactive Swagger UI (available when backend is running)
+- **Tests**: Run `pytest` in `backend/` or `npm test` in `frontend/`
+
+---
+
 ## 🔒 Security & Compliance
 FinGenie is architected to exceed modern internal audit requirements:
 - **Ephemeral Processing**: The analysis engine uses a "process-and-purge" cycle, ensuring your financial secrets stay yours.
 - **No Manual Entry**: Upload fragmented statements and get structured, audit-ready data instantly. Skip the modeling grunt work.
 - **Minimalist Footprint**: Zero external tracking scripts or cookies.
+- **API Key Security**: Keys are environment-only, never exposed to frontend
+- **CORS Configuration**: Restrict access to your domain
+- **Input Validation**: All inputs validated with strict bounds
+- **HTML Sanitization**: Safe rendering of LLM-generated content
+
+See [SECURITY.md](SECURITY.md) for complete security details.
 
 ---
 *© 2024 FINGENIE FINANCIAL UTILITIES. ALL RIGHTS RESERVED.*

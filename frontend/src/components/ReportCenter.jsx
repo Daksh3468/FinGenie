@@ -13,19 +13,40 @@ const AI_REPORT_FORMATS = [
   { id: 'academic',  icon: '🎓', label: 'Research Paper',    desc: 'Structured, methodology-driven analysis' },
 ];
 
+// Safely escape HTML to prevent XSS
+function escapeHtml(text) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return String(text).replace(/[&<>"']/g, m => map[m]);
+}
+
 function mdToHtml(md) {
   if (!md) return '';
-  return md
-    .replace(/^## (.+)$/gm,  '<h2 class="ai-report-h2">$1</h2>')
-    .replace(/^### (.+)$/gm, '<h3 class="ai-report-h3">$1</h3>')
+  
+  // Step 1: Escape all HTML to prevent injection
+  let escaped = escapeHtml(md);
+  
+  // Step 2: Selectively unescape and format markdown-only elements
+  // (only these safe patterns, never raw HTML)
+  escaped = escaped
+    .replace(/&lt;strong&gt;(.+?)&lt;\/strong&gt;/g, '<strong>$1</strong>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g,    '<em>$1</em>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^### (.+)$/gm, '<h3 class="ai-report-h3">$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2 class="ai-report-h2">$1</h2>')
     .replace(/^[•\-] (.+)$/gm, '<li>$1</li>')
     .replace(/^(\d+)\. (.+)$/gm, '<li><span class="ai-report-num">$1</span> $2</li>')
     .replace(/(<li>[\s\S]+?<\/li>)(?=\n<li>|\n\n|$)/g, '<ul>$&</ul>')
     .replace(/<\/ul>\n<ul>/g, '')
     .replace(/^(?!<[hul])(.+)$/gm, '<p>$1</p>')
     .replace(/<p>\s*<\/p>/g, '');
+  
+  return escaped;
 }
 
 function buildReportHTML({ selectedFmt, stmtType, now, report }) {

@@ -12,7 +12,7 @@ def get_groq_client(api_key: str = None) -> Groq:
         raise ValueError("Groq API key not found.")
     return Groq(api_key=key)
 
-def extract_data_from_text(text: str, api_key: str = None) -> tuple[pd.DataFrame, str]:
+def extract_data_from_text(text: str) -> tuple[pd.DataFrame, str]:
     """
     Uses LLM to extract structured financial data from raw text.
     Returns (DataFrame, statement_type).
@@ -85,7 +85,7 @@ EDGE CASES:
 - If fiscal year differs from calendar year, use the fiscal year notation (e.g., "FY2023")"""
 
     try:
-        client = get_groq_client(api_key)
+        client = get_groq_client()
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[

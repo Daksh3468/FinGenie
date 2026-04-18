@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { getApiBase } from '../api/client';
 
 export default function DocChat({ analysisResult }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,7 @@ export default function DocChat({ analysisResult }) {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:8000/api/chat/message', {
+      const res = await fetch(`${getApiBase()}/chat/message`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -46,11 +47,20 @@ export default function DocChat({ analysisResult }) {
 
       const data = await res.json();
       setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' },
-      ]);
+    } catch (err) {
+      let errorMsg = 'Network error — check backend is running.';
+      
+      if (err.response?.status === 400) {
+        errorMsg = `Invalid input: ${err.response.data?.detail || 'Check your message.'}`;
+      } else if (err.response?.status === 500) {
+        errorMsg = `Server error: ${err.response.data?.detail || 'Try again in a moment.'}`;
+      } else if (err.response?.status === 502) {
+        errorMsg = `Service temporarily unavailable: ${err.response.data?.detail || 'Try again.'}`;
+      } else if (err.code === 'ECONNABORTED') {
+        errorMsg = 'Request timed out. The backend may be slow. Try a shorter question.';
+      }
+      
+      setMessages((prev) => [...prev, { role: 'assistant', content: `❌ ${errorMsg}` }]);
     } finally {
       setLoading(false);
     }

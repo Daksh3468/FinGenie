@@ -52,7 +52,7 @@ export default function App() {
     setResult(null);
 
     try {
-      const data = await uploadAndAnalyze(file, '');
+      const data = await uploadAndAnalyze(file);
       setResult(data);
       navigateTo('analyzer');
     } catch (err) {

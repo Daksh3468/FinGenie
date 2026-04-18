@@ -1,5 +1,37 @@
 import pandas as pd
+import logging
 from models.schemas import KPI, Risk, Trend
+
+logger = logging.getLogger(__name__)
+
+
+# KPI Thresholds — can be overridden via config in future
+KPI_THRESHOLDS = {
+    'gross_profit_margin': {'good': 40, 'warn': 20},
+    'net_profit_margin': {'good': 10, 'warn': 5},
+    'expense_ratio': {'good': 60, 'warn': 80},
+    'revenue_growth': {'good': 5, 'neutral': 0},
+    'burn_rate': {'critical': 3, 'high': 6, 'warning': 12},
+}
+
+
+def get_threshold(metric_key, level='good'):
+    """Get threshold for a metric, with defaults for missing config."""
+    return KPI_THRESHOLDS.get(metric_key, {}).get(level, 0)
+
+
+def validate_dataframe(df, context=""):
+    """Ensure DataFrame is valid. Return True if valid, False otherwise."""
+    if df is None:
+        logger.warning(f"DataFrame is None in context: {context}")
+        return False
+    if not isinstance(df, pd.DataFrame):
+        logger.warning(f"Input is not DataFrame in {context}: {type(df)}")
+        return False
+    if df.empty:
+        logger.warning(f"DataFrame is empty in {context}")
+        return False
+    return True
 
 
 def compute_kpis(df: pd.DataFrame, statement_type: str) -> list[KPI]:
@@ -7,6 +39,10 @@ def compute_kpis(df: pd.DataFrame, statement_type: str) -> list[KPI]:
     Compute financial KPIs from the parsed DataFrame.
     Returns a list of KPI objects with name, value, trend, status.
     """
+    if not validate_dataframe(df, "compute_kpis"):
+        logger.warning(f"compute_kpis called with invalid DF; returning empty KPI list")
+        return []
+    
     kpis = []
     data = _extract_financial_figures(df)
 

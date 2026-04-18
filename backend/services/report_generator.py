@@ -13,7 +13,10 @@ Supports 6 report formats:
   academic   → Structured research-style paper
 """
 
+import asyncio
+from functools import partial
 from services.groq_client import get_groq_client, GROQ_MODEL
+from fastapi import HTTPException
 
 # ── Format definitions ───────────────────────────────────────────────────────
 
@@ -186,7 +189,7 @@ async def generate_report(
 
     Raises:
         ValueError: If format_id is not recognised.
-        Exception:  Propagates Groq API errors.
+        HTTPException: On API errors.
     """
     if format_id not in REPORT_FORMATS:
         valid = ", ".join(REPORT_FORMATS.keys())
@@ -196,11 +199,29 @@ async def generate_report(
 
     prompt = _build_report_prompt(analysis_result, format_id)
 
-    client = get_groq_client()
-    response = client.chat.completions.create(
-        model=GROQ_MODEL,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.45,   # slightly more creative than chat but still grounded
-        max_tokens=1500,
-    )
-    return response.choices[0].message.content.strip()
+    try:
+        # Run blocking Groq API call in thread pool with 30s timeout
+        client = get_groq_client()
+        response = await asyncio.wait_for(
+            asyncio.to_thread(
+                partial(
+                    client.chat.completions.create,
+                    model=GROQ_MODEL,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=0.45,
+                    max_tokens=1500,
+                )
+            ),
+            timeout=30.0
+        )
+        return response.choices[0].message.content.strip()
+    except asyncio.TimeoutError:
+        raise HTTPException(
+            status_code=504,
+            detail="Report generation timed out. Try a simpler format or smaller document."
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=502,
+            detail=f"Groq API error: {str(e)[:100]}"
+        )

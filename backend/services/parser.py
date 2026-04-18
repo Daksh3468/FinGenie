@@ -2,8 +2,10 @@ import io
 import zipfile
 import pandas as pd
 import pdfplumber
+import logging
 from fastapi import UploadFile, HTTPException
 
+logger = logging.getLogger(__name__)
 
 ALLOWED_EXTENSIONS = {".pdf", ".xlsx", ".xls", ".csv", ".zip", ".txt"}
 MAX_FILE_SIZE = 200 * 1024 * 1024  # 200MB
@@ -26,6 +28,25 @@ async def validate_file(file: UploadFile) -> bytes:
             status_code=400,
             detail=f"File too large. Maximum size is {MAX_FILE_SIZE // (1024*1024)}MB."
         )
+
+    # Magic signature validation (first few bytes)
+    if ext in [".pdf", ".zip", ".xls", ".xlsx"]:
+        MAGIC_SIGS = {
+            b'%PDF': '.pdf',
+            b'PK\x03\x04': ['.zip', '.xlsx', '.xls'],
+            b'\xd0\xcf\x11\xe0': ['.xls', '.xlsx'],
+        }
+        
+        for sig, expected_exts in MAGIC_SIGS.items():
+            if content.startswith(sig):
+                expected_list = expected_exts if isinstance(expected_exts, list) else [expected_exts]
+                if ext not in expected_list:
+                    logger.warning(f"File type mismatch: '{ext}' declared but magic signature detected {expected_list}")
+                    raise HTTPException(
+                        status_code=400,
+                        detail=f"File content mismatch: extension '{ext}' but detected different file type. Upload the correct file."
+                    )
+                break
 
     return content
 
@@ -116,9 +137,8 @@ def parse_sec_zip(content: bytes) -> dict[str, pd.DataFrame]:
             
             for req in required_files:
                 if req not in filenames:
-                    raise HTTPException(
-                        status_code=400, 
-                        detail=f"Missing required SEC file: {req} in zip archive."
+                    raise KeyError(
+                        f"Missing required SEC file: {req} in zip archive."
                     )
             
             # 1. Read SUB.txt first to find the target ADSH
@@ -148,9 +168,23 @@ def parse_sec_zip(content: bytes) -> dict[str, pd.DataFrame]:
                 
         return dfs
     except zipfile.BadZipFile:
-        raise HTTPException(status_code=400, detail="Invalid zip file.")
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid ZIP file. Please verify the SEC filing package is valid."
+        )
+    except KeyError as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Missing required SEC file in ZIP. Expected {str(e)}"
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error parsing SEC zip: {str(e)}")
+        logger.error(f"SEC ZIP parse error: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=400,
+            detail="Failed to parse SEC filing. Verify the ZIP contains sub.txt, num.txt, tag.txt, pre.txt"
+        )
 
 
 def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:

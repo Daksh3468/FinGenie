@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
+import logging
 from typing import Optional
+
+logger = logging.getLogger(__name__)
 
 # Semantic Mapping: XBRL Tags to Human-Readable Terms
 TAG_MAP = {
@@ -44,6 +47,28 @@ def process_sec_datasets(
     3. Map tags to human-readable terms.
     4. Return Master DataFrame + Company Metadata.
     """
+    
+    # Validate required columns exist
+    REQUIRED_NUM_COLS = ["adsh", "tag", "ddate", "value"]
+    for req_col in REQUIRED_NUM_COLS:
+        if req_col not in num_df.columns:
+            logger.error(f"Missing required SEC column '{req_col}' in NUM dataset")
+            raise ValueError(
+                f"Missing required SEC column '{req_col}' in NUM dataset. "
+                f"ZIP file may be corrupted or incomplete."
+            )
+    
+    SUB_REQUIRED_COLS = ["adsh", "name", "cik", "form", "period"]
+    for req_col in SUB_REQUIRED_COLS:
+        if req_col not in sub_df.columns:
+            logger.error(f"Missing required SUB column: {req_col}")
+            raise ValueError(f"Missing required SUB column: {req_col}")
+    
+    # Validate input DataFrames are not empty
+    if sub_df.empty:
+        raise ValueError("SUB dataset is empty. ZIP file may be corrupted.")
+    if num_df.empty:
+        raise ValueError("NUM dataset is empty. ZIP file may be corrupted.")
     
     # 1. Filter Submissions
     if target_adsh:
@@ -98,8 +123,15 @@ def process_sec_datasets(
         aggfunc="last"
     ).reset_index()
 
-    # Clean up column names (dates to strings)
-    pivoted.columns = [str(c).split(' ')[0] if isinstance(c, pd.Timestamp) else c for c in pivoted.columns]
+    # Normalize column names (especially dates)
+    pivoted.columns = [
+        c.strftime('%Y-%m-%d') if isinstance(c, pd.Timestamp)
+        else str(c).split(' ')[0] if ' ' in str(c)
+        else str(c)
+        for c in pivoted.columns
+    ]
+    # Ensure all columns are strings
+    pivoted.columns = [str(col) for col in pivoted.columns]
     
     # Sort columns by date (Metrics, Year1, Year2...)
     date_cols = sorted([c for c in pivoted.columns if c != "label"])
