@@ -1,87 +1,308 @@
-# FinGenie - Sovereign Financial Intelligence
+# FinGenie
 
-**Institutional-grade financial synthesis for the modern enterprise.** FinGenie transforms raw data into high-fidelity "Financial Velocity" reports, leveraging ephemeral AI processing and a zero-retention security framework.
+> **AI-powered financial intelligence at your fingertips.** Analyze PDFs, spreadsheets, and SEC filings to uncover trends, risks, and insights in seconds.
 
----
-
-## 🏛️ Sovereign Intelligence Philosophy
-FinGenie is built for the "Sovereign Intelligence" era—where data extraction must be local, processing must be ephemeral, and insights must be institutional-grade.
-
-- **Zero-Retention Sandbox**: All data processing occurs in a volatile heap. No financial data is persisted to long-term storage.
-- **Premium SaaS Aesthetic**: A unified, high-density UI designed for professional analysts. Features glassmorphic components, fluid micro-animations, and a cohesive design system centered around visual performance.
-- **Financial Velocity**: Move beyond simple summaries into real-time trend synthesis and risk-matrix evaluation.
-
-## 🚀 Capabilities & Architecture
-
-| Layer | Technology | Role |
-| :--- | :--- | :--- |
-| **Frontend** | React 19 + Vite | High-performance, low-latency institutional UI with dynamic layout scaling |
-| **Intelligence** | Groq (Llama 3.3 70B) | Ephemeral LLM extraction, trend synthesis, and interactive document querying |
-| **Backend** | FastAPI | High-speed, stateless data ingestion pipeline |
-| **Data Types** | PDF, XLSX, CSV, SEC XBRL ZIP | Handles standard financial files and deep SEC public filing datasets (10-K, 10-Q) |
-
-## 📊 Core Modules
-
-### 1. Financial Performance Pipeline
-A radically streamlined analyzer dashboard moving from high-level KPIs -> Trend Charts -> AI Summaries -> Risk Vectors -> Raw Ledger Preview.
-
-### 2. SEC XBRL Deep Integration
-Natively ingest SEC filing ZIP packages (`sub.txt`, `num.txt`, `tag.txt`, `pre.txt`). FinGenie semantically translates dense technical tax tags into human-readable business logic without requiring manual spreadsheet alignment.
-
-### 3. Risk Ledger & Trend Audit
-Contextual risk detection that flags institutional vulnerabilities. Analyzes Gross Margin health, Cash Runway, and Operational Burn with weighted severity metrics alongside historical projection charts.
-
-### 4. Interactive "DocChat" AI
-Query your financial ledgers directly via a floating chat assistant. Ask questions like *"Explain the revenue trend"* or *"What's our most critical operational risk?"* and get contextual answers grounded exclusively in the analyzed document.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/)
+[![React 19](https://img.shields.io/badge/React-19-blue)](https://react.dev/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104%2B-blue)](https://fastapi.tiangolo.com/)
+[![Groq API](https://img.shields.io/badge/Groq-LLM-orange)](https://groq.com/)
 
 ---
 
-## 🛠️ Quick Start
+## � What is FinGenie?
 
-### 1. Intelligence Ingestion (Backend)
+FinGenie is an intelligent document analysis platform that extracts financial insights using AI. Upload financial documents—PDFs, spreadsheets, SEC filings—and get:
+
+- **Instant AI summaries** of financial performance
+- **Automated trend detection** across revenue, margins, and cash flow
+- **Risk assessments** flagging operational vulnerabilities  
+- **Interactive chat** to query your documents with grounded, factual answers
+- **SEC filing support** including XBRL data from 10-K, 10-Q filings
+
+**No storage. No tracking. No overhead.** Documents are processed in-memory and discarded—your data never touches persistent storage.
+
+---
+
+## ✨ Key Features
+
+<table>
+<tr>
+<td>
+
+### 📊 Financial Analysis
+- KPI extraction (revenue, margins, cash runway)
+- Historical trend charting
+- Multi-period comparisons
+- AI-powered executive summary
+
+</td>
+<td>
+
+### 📄 SEC XBRL Support
+- Native 10-K, 10-Q ingestion
+- Semantic tag translation
+- No manual spreadsheet mapping
+- Full compliance context
+
+</td>
+</tr>
+<tr>
+<td>
+
+### ⚠️ Risk Insights
+- Gross margin trend detection
+- Cash runway analysis
+- Operational burn flagging
+- Weighted risk severity scoring
+
+</td>
+<td>
+
+### 💬 Document Chat
+- Ask questions about your data
+- Get grounded, document-backed answers
+- Conversational financial analysis
+- No hallucination about missing data
+
+</td>
+</tr>
+</table>
+
+---
+
+## �️ Screenshots
+
+> Screenshots coming soon. For now, check the `/frontend/src/components/` directory for the UI architecture.
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.9+ and Node.js 16+
+- A Groq API key ([get one free here](https://console.groq.com))
+
+### Backend Setup
 ```bash
 cd backend
+
+# Create virtual environment
 python -m venv venv
 venv\Scripts\activate        # Windows
+# or: source venv/bin/activate  # macOS/Linux
+
+# Install dependencies
 pip install -r requirements.txt
-# Add GROQ_API_KEY to .env
+
+# Configure environment
+echo GROQ_API_KEY=your_key_here > .env
+
+# Run the server
 uvicorn main:app --reload
+# Server running at http://localhost:8000
+# Interactive docs at http://localhost:8000/docs
 ```
 
-### 2. Interface Deployment (Frontend)
+### Frontend Setup
 ```bash
 cd frontend
+
+# Install dependencies
 npm install
+
+# Start development server
 npm run dev
-# App synchronized at http://localhost:5173
+# App running at http://localhost:5173
+```
+
+### First Time?
+1. Open http://localhost:5173 in your browser
+2. Upload a financial PDF or Excel file
+3. Wait for analysis (5-15 seconds for Groq LLM)
+4. Explore the dashboard—KPIs, trends, risks, chat
+
+---
+
+## 🎯 Who is FinGenie For?
+
+- **Investors & Analysts** — Quickly understand financial positions of companies
+- **Corporate Teams** — Analyze internal financials, SEC filings, and performance reports
+- **Financial Advisors** — Generate client insights from documents in seconds
+- **Students & Researchers** — Learn financial analysis from real data
+- **Anyone** handling PDF financials who wants AI-powered insights
+
+---
+
+## 💡 Why FinGenie?
+
+| Challenge | FinGenie Solution |
+|-----------|-------------------|
+| Manual PDF reading takes hours | AI generates summaries in seconds |
+| Spreadsheet modeling is tedious | Automatic KPI extraction and trend charting |
+| Missed risks in financial data | Automated risk flagging with severity scoring |
+| SEC filings are dense and complex | Native XBRL parsing with readable summaries |
+| Worried about data privacy | Zero-storage architecture; documents never persisted |
+
+---
+
+## 🏗️ Technical Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         Frontend (React 19 + Vite)              │
+│  ├─ Modern SPA with responsive dashboard                       │
+│  ├─ Real-time component updates                                │
+│  ├─ Secure credential handling (no client-side API keys)       │
+│  └─ Error handling with friendly user messaging                │
+└──────────────┬──────────────────────────────────────────────────┘
+               │ HTTPS/REST API
+┌──────────────▼──────────────────────────────────────────────────┐
+│                    Backend (FastAPI + Python)                   │
+│  ├─ High-performance async request handling                    │
+│  ├─ File validation (magic signatures, size limits)            │
+│  ├─ Data processing pipelines (parsing, transformation)        │
+│  ├─ Timeout protection (45s analysis, 30s reports)            │
+│  └─ Structured error handling & logging                        │
+└──────────────┬──────────────────────────────────────────────────┘
+               │ API Calls
+┌──────────────▼──────────────────────────────────────────────────┐
+│              LLM (Groq API - Llama 3.3 70B)                     │
+│  ├─ Real-time financial data extraction                        │
+│  ├─ Trend synthesis & risk analysis                            │
+│  ├─ Document-grounded question answering                       │
+│  └─ Zero external data leakage (request-based, not logged)    │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Tech Stack
+
+| Layer | Technology | Why |
+|-------|-----------|-----|
+| **Frontend** | React 19 + Vite | Modern, fast, excellent DX |
+| **Backend** | FastAPI + Python 3.9+ | Async, high-performance, great API docs |
+| **LLM** | Groq (Llama 3.3 70B) | Fast inference, no token limits, cost-effective |
+| **Files** | PDF, XLSX, CSV, ZIP | Universal financial document formats |
+| **Testing** | pytest, pytest-asyncio | Async-aware, production-grade reliability |
+| **Deployment** | Docker, Gunicorn, systemd | Flexible, scalable, secure |
+
+---
+
+## 🔒 Security & Privacy
+
+FinGenie takes security seriously—see the full [SECURITY.md](SECURITY.md) for comprehensive details.
+
+**Quick highlights:**
+- ✅ **Zero persistent storage** — All data processed in-memory, never saved
+- ✅ **No tracking** — No cookies, no external scripts, no behavioral logging
+- ✅ **API key protection** — Credentials stored server-side in environment variables only
+- ✅ **Input validation** — File signatures, size limits, schema enforcement
+- ✅ **HTTPS-only** — TLS 1.2+ required for all production deployments
+- ✅ **Responsible disclosure** — Security vulnerabilities reported via GitHub security advisories
+- ⚠️ **Early-stage project** — Recommended for general use; conduct security review before processing highly sensitive data
+
+**Privacy in a nutshell:** We don't store your documents. We don't collect personal data. We don't track you. That's it.
+
+---
+
+## 📚 Documentation
+
+| Document | Purpose |
+|----------|---------|
+| [Backend Deployment Guide](backend/DEPLOYMENT.md) | Production setup, Docker, Gunicorn, systemd, troubleshooting |
+| [Frontend Deployment Guide](frontend/DEPLOYMENT.md) | Build optimization, deployment to Vercel/Netlify/AWS/Docker |
+| [Security Policy](SECURITY.md) | Detailed security practices, threat model, responsible disclosure |
+| [Backend API Docs](http://localhost:8000/docs) | Interactive Swagger UI (run backend first) |
+
+### Running Tests
+```bash
+# Backend unit tests
+cd backend
+pytest
+
+# Frontend tests
+cd frontend
+npm test
 ```
 
 ---
 
-## � Documentation
+## 🗺️ Roadmap
 
-### Setup & Deployment
-- **[Backend Deployment Guide](backend/DEPLOYMENT.md)** — Production setup, environment config, health checks, troubleshooting
-- **[Frontend Deployment Guide](frontend/DEPLOYMENT.md)** — Build process, deploy to Vercel/Netlify/AWS/Docker, caching, optimization
-- **[Security Policy](SECURITY.md)** — Security practices, API key management, CORS, data privacy, responsible disclosure
+### Current (v1.0)
+- ✅ PDF, Excel, CSV analysis
+- ✅ SEC XBRL 10-K/10-Q support
+- ✅ KPI extraction & charting
+- ✅ Risk assessment engine
+- ✅ Document chat interface
+- ✅ Secure zero-storage architecture
 
-### Development
-- **[Backend API Documentation](http://localhost:8000/docs)** — Interactive Swagger UI (available when backend is running)
-- **Tests**: Run `pytest` in `backend/` or `npm test` in `frontend/`
+### Planned
+- 🔄 Batch file processing (multiple documents in one analysis)
+- 🔄 Export reports as PDF/markdown
+- 🔄 Shareable analysis links
+- 🔄 Custom KPI definitions
+- 🔄 Multi-user accounts and workspace management
+- 🔄 Email digest of financial updates
+
+### Considering
+- Web-scraping for live stock data correlation
+- Integration with accounting software APIs
+- Advanced portfolio analytics
+- Peer company comparison
+
+Have ideas? [Open a GitHub issue](../../issues) or reach out.
 
 ---
 
-## 🔒 Security & Compliance
-FinGenie is architected to exceed modern internal audit requirements:
-- **Ephemeral Processing**: The analysis engine uses a "process-and-purge" cycle, ensuring your financial secrets stay yours.
-- **No Manual Entry**: Upload fragmented statements and get structured, audit-ready data instantly. Skip the modeling grunt work.
-- **Minimalist Footprint**: Zero external tracking scripts or cookies.
-- **API Key Security**: Keys are environment-only, never exposed to frontend
-- **CORS Configuration**: Restrict access to your domain
-- **Input Validation**: All inputs validated with strict bounds
-- **HTML Sanitization**: Safe rendering of LLM-generated content
+## 🤝 Contributing
 
-See [SECURITY.md](SECURITY.md) for complete security details.
+Contributions are welcome! Whether it's bug fixes, features, or documentation:
+
+1. **Fork** the repository
+2. **Create a branch** (`git checkout -b feature/your-feature`)
+3. **Make changes** and test thoroughly
+4. **Commit** with clear messages
+5. **Push** and **open a Pull Request**
+
+### Development Guidelines
+- Follow PEP 8 for Python; Prettier for JavaScript
+- Write tests for new features
+- Update documentation
+- Keep commits atomic and descriptive
+
+### Areas We'd Love Help With
+- Backend: Additional file format support (Word, PowerPoint), database integration
+- Frontend: Enhanced visualizations, accessibility improvements, mobile optimization
+- Deployment: Kubernetes manifests, Terraform IaC, CI/CD pipelines
+- Docs: Tutorials, case studies, API documentation
 
 ---
-*© 2024 FINGENIE FINANCIAL UTILITIES. ALL RIGHTS RESERVED.*
+
+## 📄 License
+
+FinGenie is released under the **MIT License**. See [LICENSE](LICENSE) for details.
+
+You're free to use, modify, and distribute FinGenie in personal and commercial projects.
+
+---
+
+## 🙋 Support & Questions
+
+- **Bug reports** — [GitHub Issues](../../issues)
+- **Feature requests** — [GitHub Discussions](../../discussions)
+- **Security issues** — [GitHub Security Advisories](../../security/advisories) (please don't create public issues)
+
+---
+
+## 🧠 Built By
+
+FinGenie is an open-source project created to demonstrate how modern AI, clean architecture, and security-first design can solve real financial analysis problems.
+
+**Interested in working together?** Check the code, and if you like what you see, reach out.
+
+---
+
+**Last updated:** April 18, 2026  
+**Current version:** 1.0  
+⭐ **If you find FinGenie useful, please star this repository!**
