@@ -18,29 +18,16 @@ FinGenie is designed with security and privacy as core principles. This document
 - **Environment-only** — API keys are never transmitted from frontend to backend
 - **Backend-only access** — Only the backend makes calls to Groq API
 - **No client-side keys** — Frontend has no direct access to Groq API
-- **Use environment variables** — Always load keys from `.env`, never hardcode
-
-```python
-# ✅ CORRECT
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-
-# ❌ WRONG
-GROQ_API_KEY = "gsk_..."  # Never hardcode!
-```
+- **Runtime injection** — API keys are loaded at runtime from secure environment variables, not embedded in code or configuration files
+- **Separation of concerns** — Frontend never has knowledge of or access to authentication credentials
 
 ### 3. CORS Configuration
 
-- **Restricted origins** — Only specified domains can access the API
-- **Environment-based** — CORS origins are configured via `ALLOWED_ORIGINS` env var
-- **Production-only** — Different origins for staging vs production
-
-```env
-# Development
-ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
-
-# Production
-ALLOWED_ORIGINS=https://app.fingenie.com,https://staging.fingenie.com
-```
+- **Restricted origins** — Only specified domains can access the API via browser-based requests
+- **Environment-based** — CORS origins are configured via environment variables, not hardcoded
+- **Production-specific** — Different origin whitelists for development, staging, and production environments
+- **Preflight handling** — Browser sends preflight requests which are validated against the whitelist before actual requests are processed
+- **Credential separation** — CORS policies ensure sensitive operations cannot be triggered from unauthorized domains
 
 ### 4. Input Validation
 
@@ -56,50 +43,27 @@ All user inputs are validated with Pydantic schemas:
 
 ### 5. Output Escaping
 
-- **HTML escaping** — All HTML tags are escaped before rendering in frontend
-- **JSON parsing** — LLM responses are parsed as JSON, not evaluated as code
-- **No dangerous patterns** — Markdown is rendered safely without raw HTML
-
-```javascript
-// ✅ CORRECT - Escaped HTML
-function escapeHtml(text) {
-  const map = { '<': '&lt;', '>': '&gt;' };
-  return String(text).replace(/[&<>"']/g, m => map[m]);
-}
-
-// ❌ WRONG - Dangerous
-innerHTML = userInput;  // Can enable XSS attacks
-```
+- **HTML entity encoding** — All potentially harmful HTML characters are converted to their safe entity representations before rendering
+- **Content sanitization** — LLM responses undergo validation and transformation to remove or neutralize any executable code patterns
+- **Safe parsing models** — JSON responses are parsed as data structures, never evaluated as executable code
+- **Markdown safety** — Markdown rendering uses only a safe subset of formatting rules, excluding raw HTML passthrough
+- **Defense against XSS** — These measures prevent Cross-Site Scripting attacks even if user input somehow contains malicious content
 
 ### 6. HTTPS Only
 
-- **Production requirement** — All traffic must be encrypted with TLS/SSL
-- **Redirect HTTP** — Redirect http:// to https:// automatically
-- **HSTS headers** — Enforce HTTPS policy in browser
-
-```
-Strict-Transport-Security: max-age=31536000; includeSubDomains
-```
+- **Transport encryption** — All traffic is encrypted end-to-end using TLS/SSL protocols
+- **Automatic redirection** — Plain HTTP requests are automatically redirected to encrypted HTTPS connections
+- **HSTS enforcement** — Strict Transport Security headers inform browsers to always use encrypted connections for this domain, preventing downgrade attacks
+- **Certificate validation** — SSL/TLS certificates are validated to ensure communication is with the legitimate server, not an impostor
+- **Forward secrecy** — Perfect Forward Secrecy (PFS) ensures that session encryption keys cannot be compromised even if long-term keys are breached
 
 ### 7. Error Handling
 
-- **No sensitive details in errors** — Error messages don't expose internal paths or API keys
-- **Logging for debugging** — Detailed errors logged server-side for investigation
-- **User-friendly messages** — Frontend shows helpful, generic error messages
-
-```python
-# ✅ CORRECT
-raise HTTPException(
-    status_code=502,
-    detail="Analysis service error. Please try again."
-)
-
-# ❌ WRONG
-raise HTTPException(
-    status_code=502,
-    detail=f"Groq API key invalid: {GROQ_API_KEY}"  # Exposes key!
-)
-```
+- **Information hiding** — Error messages returned to users are intentionally vague and never expose internal system details, API keys, file paths, or database structure
+- **Server-side logging** — Detailed error information is logged on the backend for debugging and monitoring purposes, but not transmitted to the client
+- **Generic user feedback** — Users receive helpful but non-technical error messages that guide them to retry or seek support without revealing vulnerabilities
+- **Graceful degradation** — System errors are handled without crashing the application or exposing stack traces to the client
+- **Audit trails** — All errors are logged with context (user, timestamp, action) for security investigation and compliance purposes
 
 ## API Endpoint Security
 
