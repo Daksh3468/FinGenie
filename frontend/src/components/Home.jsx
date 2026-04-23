@@ -27,7 +27,7 @@ export default function Home({ onFileSelect, isLoading, error }) {
             Decode <span className="page-header__accent">Sovereign</span> <br /> Institutional Data.
           </h1>
           <p className="hero-subtitle mb-lg">
-            Upload balance sheets, income statements, or SEC XBRL datasets to extract semantic narratives, risk vectors, and actionable intelligence instantly.
+            Upload balance sheets, income statements, or cash flow reports to extract semantic narratives, risk vectors, and actionable intelligence instantly.
           </p>
           
           <div className="hero-actions d-flex gap-4">
@@ -107,8 +107,8 @@ export default function Home({ onFileSelect, isLoading, error }) {
              <div className="mb-md" style={{ background: 'rgba(5, 150, 105, 0.05)', width: 'fit-content', padding: '16px', borderRadius: '16px' }}>
                 <Database className="text-emerald" size={32} style={{ color: 'var(--accent-emerald)' }} />
              </div>
-             <h3 style={{ fontSize: '22px', marginBottom: 'var(--space-xs)' }}>SEC-Ready Intelligence</h3>
-             <p className="text-secondary" style={{ lineHeight: 1.6 }}>Process massive XBRL datasets (10-K, 10-Q) and generate competitive landscape reports in seconds.</p>
+             <h3 style={{ fontSize: '22px', marginBottom: 'var(--space-xs)' }}>Institutional Intelligence</h3>
+             <p className="text-secondary" style={{ lineHeight: 1.6 }}>Process complex financial datasets and generate audit-ready competitive landscape reports in seconds.</p>
           </div>
         </div>
       </section>
@@ -125,7 +125,7 @@ export default function Home({ onFileSelect, isLoading, error }) {
             <div className="card-light hover-lift d-flex flex-column" style={{ height: '100%', padding: '40px' }}>
               <div className="mb-md" style={{ color: 'var(--accent-blue)' }}><Upload size={32} /></div>
               <h3 className="section-heading__label mb-sm" style={{ color: 'var(--accent-blue)', opacity: 0.8 }}>01 Ingestion</h3>
-              <p className="text-secondary" style={{ fontSize: '15px' }}>Upload arbitrary financial PDFs, Excel sheets, or XBRL ZIP files from official regulators.</p>
+              <p className="text-secondary" style={{ fontSize: '15px' }}>Upload institutional financial PDFs, Excel sheets, or CSV files for automated auditing.</p>
             </div>
           </div>
 
@@ -227,7 +227,7 @@ export default function Home({ onFileSelect, isLoading, error }) {
              <ul className="text-secondary" style={{ paddingLeft: '20px', fontSize: '14px', lineHeight: 2 }}>
                 <li>FastAPI High-Performance Backend</li>
                 <li>PDFPlumber Structural Extraction</li>
-                <li>SEC XBRL Instance Document Parser</li>
+                <li>Multi-Format Data Ingestion Engine</li>
                 <li>Pandas Vectorized Data Processing</li>
              </ul>
           </div>
@@ -269,7 +269,7 @@ export default function Home({ onFileSelect, isLoading, error }) {
         
         <div className="faq-item">
           <div className="faq-question">How is this different from manual Excel modeling?</div>
-          <div className="faq-answer">FinGenie automates the extraction and normalization of data from static PDFs and SEC filings, saving hours of manual data entry while providing AI-detected risk insights that human analysts often miss.</div>
+          <div className="faq-answer">FinGenie automates the extraction and normalization of data from static PDFs and spreadsheets, saving hours of manual data entry while providing AI-detected risk insights that human analysts often miss.</div>
         </div>
         <div className="faq-item">
           <div className="faq-question">Can I trust the AI-generated KPIs?</div>

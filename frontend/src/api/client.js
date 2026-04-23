@@ -8,7 +8,7 @@ export const getApiBase = () => API_BASE;
 
 const api = axios.create({
   baseURL: API_BASE,
-  timeout: 600000, // 10 minutes for large SEC dataset processing
+  timeout: 600000, // 10 minutes for large document processing
 });
 
 export async function uploadAndAnalyze(file) {

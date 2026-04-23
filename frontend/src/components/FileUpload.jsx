@@ -7,8 +7,6 @@ const ACCEPTED_TYPES = {
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
   'application/vnd.ms-excel': ['.xls'],
   'text/csv': ['.csv'],
-  'application/zip': ['.zip'],
-  'application/x-zip-compressed': ['.zip'],
 };
 
 export default function FileUpload({ onFileSelect, isLoading, error }) {
@@ -62,18 +60,18 @@ export default function FileUpload({ onFileSelect, isLoading, error }) {
               <Upload className="text-accent" size={32} />
             </div>
             <h2 className="section-heading__label mb-xs">Document Intelligence</h2>
-            <p className="text-secondary mb-lg">Drag & drop PDF, XLSX, or SEC XBRL ZIP</p>
+            <p className="text-secondary mb-lg">Drag & drop PDF, Excel, or CSV</p>
             <div className="d-flex items-center gap-4 text-muted" style={{ fontSize: '11px', fontWeight: 600 }}>
-              <span className="d-flex items-center gap-2"><FileText size={14} /> PDF / XLSX</span>
-              <span className="d-flex items-center gap-2"><FileText size={14} /> SEC XBRL ZIP</span>
+              <span className="d-flex items-center gap-2"><FileText size={14} /> PDF / Excel</span>
+              <span className="d-flex items-center gap-2"><FileText size={14} /> CSV</span>
             </div>
           </div>
         )}
       </div>
 
       {error && (
-        <div className="error-badge mt-md slide-up d-flex items-center gap-2" style={{ color: 'var(--accent-rose)', background: 'rgba(225, 29, 72, 0.05)', padding: '12px 16px', borderRadius: 'var(--radius-md)', border: '1px solid rgba(225, 29, 72, 0.1)', fontSize: '14px', fontWeight: 600 }}>
-          <AlertCircle size={16} />
+        <div className="error-badge mt-md slide-up d-flex items-start gap-2" style={{ color: 'var(--accent-rose)', background: 'rgba(225, 29, 72, 0.05)', padding: '16px', borderRadius: 'var(--radius-md)', border: '1px solid rgba(225, 29, 72, 0.1)', fontSize: '14px', fontWeight: 500, lineHeight: '1.5', textAlign: 'left' }}>
+          <AlertCircle size={18} style={{ flexShrink: 0, marginTop: '2px' }} />
           <span>{error}</span>
         </div>
       )}

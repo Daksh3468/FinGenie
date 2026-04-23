@@ -72,7 +72,23 @@ async def upload_and_analyze(
         else:
             logger.warning(f"No data extracted from {file.filename} for KPI computation")
 
-        # 5. Generate AI summary
+        # 5. Guard — reject if no financial data was found at all
+        has_data = df is not None and not df.empty
+        has_kpis = len(kpis) > 0
+        has_trends = len(trends) > 0
+
+        if not has_data and not has_kpis and not has_trends:
+            raise HTTPException(
+                status_code=422,
+                detail=(
+                    "The uploaded document does not appear to contain financial data. "
+                    "FinGenie expects files with structured financial content such as income statements, "
+                    "balance sheets, cash flow statements, or tabular numeric data. "
+                    "Please upload a valid financial document and try again."
+                )
+            )
+
+        # 6. Generate AI summary
         llm_result = await generate_summary(df, statement_type, kpis, risks, trends)
         
         # Map mitigations back to risks using exact matching only

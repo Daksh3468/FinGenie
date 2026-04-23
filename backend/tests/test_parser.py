@@ -32,7 +32,7 @@ async def test_validate_file_disallowed_extension():
         await validate_file(file_mock)
     
     assert exc_info.value.status_code == 400
-    assert "Unsupported file type" in exc_info.value.detail
+    assert "invalid file format upload only PDF, Excel and CSV" in exc_info.value.detail
 
 
 @pytest.mark.asyncio

@@ -43,9 +43,8 @@ All user input is validated before processing:
 
 **File Uploads:**
 - Magic signature validation (checks actual file bytes, not just extension)
-- File type whitelist: `.pdf`, `.xlsx`, `.xls`, `.csv`, `.zip`, `.txt`
+- File type whitelist: `.pdf`, `.xlsx`, `.xls`, `.csv`
 - Maximum file size: 200MB
-- SEC ZIP structure validation (verifies presence of required sub.txt, num.txt, tag.txt, pre.txt)
 - Malformed file rejection with user-friendly error messages
 
 **Chat & Analysis Input:**
@@ -85,14 +84,13 @@ The API implements protections against resource exhaustion:
 **Security Controls:**
 - File type validation via magic signature (prevents file spoofing)
 - Size limit enforcement (200MB maximum)
-- Zip archive structure validation before processing
-- Column existence checks in SEC datasets
+- Structural validation of financial tables
 - Error messages don't reveal internal paths or system details
 
 **Risk Mitigation:**
 - Malicious files are rejected before parsing
 - Oversized uploads are rejected before buffering
-- Malformed SEC zips fail gracefully with user-facing guidance
+- Malformed files fail gracefully with user-facing guidance
 
 ### Chat Endpoint (`POST /api/chat/message`)
 
@@ -181,7 +179,7 @@ For details, see [Responsible Disclosure](#responsible-disclosure).
 
 During normal operation, FinGenie processes:
 
-- **Uploaded financial documents** — PDFs, Excel files, CSV files, SEC XBRL zip archives
+- **Uploaded financial documents** — PDFs, Excel files, CSV files
 - **User messages** — Text input for the chat interface
 - **Analysis parameters** — Session IDs, document type indicators, report format selections
 

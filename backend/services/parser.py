@@ -7,7 +7,7 @@ from fastapi import UploadFile, HTTPException
 
 logger = logging.getLogger(__name__)
 
-ALLOWED_EXTENSIONS = {".pdf", ".xlsx", ".xls", ".csv", ".zip", ".txt"}
+ALLOWED_EXTENSIONS = {".pdf", ".xlsx", ".xls", ".csv"}
 MAX_FILE_SIZE = 200 * 1024 * 1024  # 200MB
 
 
@@ -19,7 +19,7 @@ async def validate_file(file: UploadFile) -> bytes:
     if ext not in ALLOWED_EXTENSIONS:
         raise HTTPException(
             status_code=400,
-            detail=f"Unsupported file type '{ext}'. Allowed: {', '.join(ALLOWED_EXTENSIONS)}"
+            detail="invalid file format upload only PDF, Excel and CSV"
         )
 
     content = await file.read()
@@ -30,10 +30,10 @@ async def validate_file(file: UploadFile) -> bytes:
         )
 
     # Magic signature validation (first few bytes)
-    if ext in [".pdf", ".zip", ".xls", ".xlsx"]:
+    if ext in [".pdf", ".xls", ".xlsx"]:
         MAGIC_SIGS = {
             b'%PDF': '.pdf',
-            b'PK\x03\x04': ['.zip', '.xlsx', '.xls'],
+            b'PK\x03\x04': ['.xlsx', '.xls'],
             b'\xd0\xcf\x11\xe0': ['.xls', '.xlsx'],
         }
         
@@ -122,72 +122,6 @@ def parse_csv(content: bytes) -> pd.DataFrame:
         raise HTTPException(status_code=400, detail=f"Error reading CSV file: {str(e)}")
 
 
-def parse_sec_zip(content: bytes) -> dict[str, pd.DataFrame]:
-    """
-    Extract SUB, NUM, TAG, PRE datasets from an SEC zip archive with memory efficiency.
-    1. Read 'sub' to find the most recent/relevant filing (adsh).
-    2. Filter 'num', 'tag', 'pre' by that adsh while reading in chunks.
-    """
-    dfs = {}
-    required_files = ["sub.txt", "num.txt", "tag.txt", "pre.txt"]
-    
-    try:
-        with zipfile.ZipFile(io.BytesIO(content)) as z:
-            filenames = {f.lower(): f for f in z.namelist()}
-            
-            for req in required_files:
-                if req not in filenames:
-                    raise KeyError(
-                        f"Missing required SEC file: {req} in zip archive."
-                    )
-            
-            # 1. Read SUB.txt first to find the target ADSH
-            with z.open(filenames["sub.txt"]) as f:
-                sub_df = pd.read_csv(f, sep="\t", encoding_errors="replace")
-                if sub_df.empty:
-                    raise ValueError("The SUB.txt file is empty. Cannot identify a target filing.")
-                
-                # Pick the most recent submission
-                sub_df["period"] = pd.to_numeric(sub_df["period"], errors='coerce')
-                sub_df = sub_df.sort_values("period", ascending=False)
-                target_adsh = sub_df["adsh"].iloc[0]
-                dfs["sub"] = sub_df[sub_df["adsh"] == target_adsh].copy()
-
-            # 2. Filter NUM.txt in chunks (Memory optimization)
-            with z.open(filenames["num.txt"]) as f:
-                num_chunks = pd.read_csv(f, sep="\t", encoding_errors="replace", chunksize=100000)
-                filtered_num = pd.concat([chunk[chunk["adsh"] == target_adsh] for chunk in num_chunks])
-                dfs["num"] = filtered_num
-
-            # 3. Filter PRE.txt in chunks
-            with z.open(filenames["pre.txt"]) as f:
-                pre_chunks = pd.read_csv(f, sep="\t", encoding_errors="replace", chunksize=50000)
-                filtered_pre = pd.concat([chunk[chunk["adsh"] == target_adsh] for chunk in pre_chunks])
-                dfs["pre"] = filtered_pre
-
-            # 4. Load TAG.txt (usually small enough to load fully, but let's be safe)
-            with z.open(filenames["tag.txt"]) as f:
-                dfs["tag"] = pd.read_csv(f, sep="\t", encoding_errors="replace")
-                
-        return dfs
-    except zipfile.BadZipFile:
-        raise HTTPException(
-            status_code=400,
-            detail="Invalid ZIP file. Please verify the SEC filing package is valid."
-        )
-    except KeyError as e:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Missing required SEC file in ZIP. Expected {str(e)}"
-        )
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        logger.error(f"SEC ZIP parse error: {str(e)}", exc_info=True)
-        raise HTTPException(
-            status_code=400,
-            detail="Failed to parse SEC filing. Verify the ZIP contains sub.txt, num.txt, tag.txt, pre.txt"
-        )
 
 
 def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
@@ -284,11 +218,11 @@ async def parse_file(file: UploadFile) -> tuple[pd.DataFrame | None, str | None,
         df = parse_excel(content)
     elif ext == ".csv":
         df = parse_csv(content)
-    elif ext == ".zip":
-        # ZIP is special, return the content for specialized SEC routing
-        return None, content, "sec_zip", "SEC Filing"
     else:
-        raise HTTPException(status_code=400, detail="Unsupported file type.")
+        raise HTTPException(
+            status_code=400,
+            detail="invalid file format upload only PDF, Excel and CSV"
+        )
 
     # Detect statement type (fallback to 'Financial Statement')
     if df is not None:

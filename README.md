@@ -1,6 +1,6 @@
 # FinGenie
 
-> **AI-powered financial intelligence at your fingertips.** Analyze PDFs, spreadsheets, and SEC filings to uncover trends, risks, and insights in seconds.
+> **AI-powered financial intelligence at your fingertips.** Analyze PDFs, spreadsheets, and CSV files to uncover trends, risks, and insights in seconds.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/)
@@ -12,13 +12,12 @@
 
 ## � What is FinGenie?
 
-FinGenie is an intelligent document analysis platform that extracts financial insights using AI. Upload financial documents—PDFs, spreadsheets, SEC filings—and get:
+FinGenie is an intelligent document analysis platform that extracts financial insights using AI. Upload financial documents—PDFs, spreadsheets, CSVs—and get:
 
 - **Instant AI summaries** of financial performance
 - **Automated trend detection** across revenue, margins, and cash flow
 - **Risk assessments** flagging operational vulnerabilities  
 - **Interactive chat** to query your documents with grounded, factual answers
-- **SEC filing support** including XBRL data from 10-K, 10-Q filings
 
 **No storage. No tracking. No overhead.** Documents are processed in-memory and discarded—your data never touches persistent storage.
 
@@ -39,11 +38,11 @@ FinGenie is an intelligent document analysis platform that extracts financial in
 </td>
 <td>
 
-### 📄 SEC XBRL Support
-- Native 10-K, 10-Q ingestion
-- Semantic tag translation
-- No manual spreadsheet mapping
-- Full compliance context
+### 📄 Multi-Format Support
+- Native PDF extraction
+- Excel (.xlsx, .xls) ingestion
+- CSV data processing
+- Clean data normalization
 
 </td>
 </tr>
@@ -127,7 +126,7 @@ npm run dev
 ## 🎯 Who is FinGenie For?
 
 - **Investors & Analysts** — Quickly understand financial positions of companies
-- **Corporate Teams** — Analyze internal financials, SEC filings, and performance reports
+- **Corporate Teams** — Analyze internal financials, performance reports, and audit documents
 - **Financial Advisors** — Generate client insights from documents in seconds
 - **Students & Researchers** — Learn financial analysis from real data
 - **Anyone** handling PDF financials who wants AI-powered insights
@@ -141,7 +140,7 @@ npm run dev
 | Manual PDF reading takes hours | AI generates summaries in seconds |
 | Spreadsheet modeling is tedious | Automatic KPI extraction and trend charting |
 | Missed risks in financial data | Automated risk flagging with severity scoring |
-| SEC filings are dense and complex | Native XBRL parsing with readable summaries |
+| Complex financial documents | Native document parsing with readable summaries |
 | Worried about data privacy | Zero-storage architecture; documents never persisted |
 
 ---
@@ -182,7 +181,7 @@ npm run dev
 | **Frontend** | React 19 + Vite | Modern, fast, excellent DX |
 | **Backend** | FastAPI + Python 3.9+ | Async, high-performance, great API docs |
 | **LLM** | Groq (Llama 3.3 70B) | Fast inference, no token limits, cost-effective |
-| **Files** | PDF, XLSX, CSV, ZIP | Universal financial document formats |
+| **Files** | PDF, XLSX, CSV | Universal financial document formats |
 | **Testing** | pytest, pytest-asyncio | Async-aware, production-grade reliability |
 | **Deployment** | Docker, Gunicorn, systemd | Flexible, scalable, secure |
 
@@ -231,7 +230,6 @@ npm test
 
 ### Current (v1.0)
 - ✅ PDF, Excel, CSV analysis
-- ✅ SEC XBRL 10-K/10-Q support
 - ✅ KPI extraction & charting
 - ✅ Risk assessment engine
 - ✅ Document chat interface
