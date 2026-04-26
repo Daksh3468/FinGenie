@@ -127,8 +127,8 @@ export default function DocChat({ analysisResult }) {
           position: fixed;
           bottom: 96px;
           right: 24px;
-          width: 400px;
-          height: 600px;
+          width: 35%;
+          height: 80%;
           background: white;
           border: 1px solid var(--border-light);
           border-radius: 24px;

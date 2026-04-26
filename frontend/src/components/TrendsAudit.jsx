@@ -7,7 +7,7 @@ import { TrendingUp, Database, Calendar, BarChart2, Activity, ArrowUpRight, Arro
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler);
 
-function formatNumber(val) {
+export function formatNumber(val) {
   if (typeof val !== 'number') return val;
   return val.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 }

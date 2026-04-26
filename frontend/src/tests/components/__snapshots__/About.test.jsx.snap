@@ -1,0 +1,145 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`About > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="fade-in slide-up px-6 md:px-12 py-16"
+    style="max-width: 1000px; margin: 0px auto;"
+  >
+    <div
+      class="sub-label"
+    >
+      The Mission
+    </div>
+    <h1
+      class="hero-title mb-md"
+    >
+      Democratizing
+      <br />
+      <span
+        class="text-accent"
+      >
+        Institutional Intel.
+      </span>
+    </h1>
+    <div
+      class="card-light"
+      style="padding: var(--space-lg); border-radius: var(--radius-xl);"
+    >
+      <div
+        style="margin-bottom: var(--space-lg);"
+      >
+        <h3
+          class="section-heading__label mb-sm"
+          style="color: var(--accent-blue);"
+        >
+          Mathematical Foundation
+        </h3>
+        <p
+          style="color: var(--text-secondary); font-size: 18px; line-height: 1.7; margin-bottom: var(--space-md); font-weight: 500;"
+        >
+          FinGenie was built on the premise that traditional GAAP accounting principles could be combined with modern Bayesian inference models to provide the most objective financial outlook possible.
+        </p>
+        <p
+          style="color: var(--text-secondary); font-size: 18px; line-height: 1.7; font-weight: 500;"
+        >
+          Our sovereign engine ingests complex datasets and maps proprietary data points into normalized vectors. We apply deep technical analysis—including Ratio Synthesis and Anomaly Detection—to build an actionable narrative.
+        </p>
+      </div>
+      <div
+        class="card-dark"
+        style="padding: 40px; border-radius: var(--radius-lg);"
+      >
+        <h3
+          class="section-heading__label mb-md"
+          style="color: rgba(255, 255, 255, 0.4);"
+        >
+          Security & Privacy Ethics
+        </h3>
+        <div
+          class="d-flex flex-column gap-5"
+        >
+          <div
+            class="d-flex gap-4"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-shield text-accent"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+              />
+            </svg>
+            <div>
+              <strong
+                style="color: white; display: block; margin-bottom: 4px; font-size: 16px;"
+              >
+                Edge Encryption
+              </strong>
+              <span
+                style="color: rgb(156, 163, 175); font-size: 14px;"
+              >
+                Files are tokenized client-side before processing using AES-256 standards.
+              </span>
+            </div>
+          </div>
+          <div
+            class="d-flex gap-4"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-trash2 lucide-trash-2 text-accent"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 11v6"
+              />
+              <path
+                d="M14 11v6"
+              />
+              <path
+                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"
+              />
+              <path
+                d="M3 6h18"
+              />
+              <path
+                d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+              />
+            </svg>
+            <div>
+              <strong
+                style="color: white; display: block; margin-bottom: 4px; font-size: 16px;"
+              >
+                Zero-Knowledge
+              </strong>
+              <span
+                style="color: rgb(156, 163, 175); font-size: 14px;"
+              >
+                Artifacts are purged continuously after the session ends. No data persistence.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

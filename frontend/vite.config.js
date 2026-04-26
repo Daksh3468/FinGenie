@@ -13,5 +13,20 @@ export default defineConfig({
         proxyTimeout: 600000,
       }
     }
-  }
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js',
+    testTimeout: 10000,
+    css: false,          // ← prevents CSS import crashes (ExportSuite, etc.)
+    include: ['src/tests/**/*.test.{js,jsx}'],
+    coverage: {
+      provider: 'istanbul',
+      reporter: ['text', 'html'],
+      include: ['src/components/**'],
+      exclude: ['src/main.jsx', 'src/tests/**'],
+      thresholds: { lines: 100, functions: 100, branches: 100 },
+    },
+  },
 })

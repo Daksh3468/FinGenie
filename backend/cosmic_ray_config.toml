@@ -1,0 +1,14 @@
+[cosmic-ray]
+module-path = "services"          # path to your FastAPI app package
+timeout = 30.0               # kill mutant if test takes longer than 30s
+excluded-modules = []
+
+test-command = "python -m pytest tests/ -x -q"
+
+[cosmic-ray.distributor]
+name = "local"
+
+[cosmic-ray.filters.operators-filter]
+exclude-operators = [
+    "core/RemoveDecorator",  # prevents removing FastAPI decorators like @app.get
+]

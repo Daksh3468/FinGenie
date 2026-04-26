@@ -287,7 +287,10 @@ export default function ReportCenter({ analysisResult }) {
       </div>
 
       <div className="layer-panels">
-        {activeLayer === 'ai' ? <AIReportGenerator analysisResult={analysisResult} /> : <ExportSuite analysisResult={analysisResult} />}
+        {activeLayer === 'ai' 
+          ? <AIReportGenerator analysisResult={analysisResult} /> 
+          : <div data-testid="export-suite"><ExportSuite analysisResult={analysisResult} /></div>
+        }
       </div>
     </section>
   );
